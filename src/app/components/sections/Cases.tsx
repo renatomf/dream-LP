@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -69,6 +69,16 @@ export default function Cases() {
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [modalCase, setModalCase] = useState<Case | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const visibleCases = ALL_CASES.slice(0, visibleCount);
   const hasMore = visibleCount < ALL_CASES.length;
 
@@ -76,17 +86,28 @@ export default function Cases() {
     const idx = ALL_CASES.findIndex((x) => x.id === c.id);
     setCarouselIndex(idx);
     setModalCase(c);
+    setIsPlaying(true);
   }
 
   function navigate(dir: 1 | -1) {
     const next = (carouselIndex + dir + ALL_CASES.length) % ALL_CASES.length;
     setCarouselIndex(next);
     setModalCase(ALL_CASES[next]);
+    setIsPlaying(true);
+  }
+
+  function togglePlay() {
+    const cmd = isPlaying ? 'pauseVideo' : 'playVideo';
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func: cmd, args: [] }),
+      '*'
+    );
+    setIsPlaying(!isPlaying);
   }
 
   return (
     <>
-      <section id="cases" className="bg-white pt-4 pb-20 md:pt-6 md:pb-28">
+      <section id="cases" className="bg-white pt-4 pb-20 md:pt-10 md:pb-28">
         <div className="max-w-6xl mx-auto px-8">
 
           {/* Heading */}
@@ -118,6 +139,10 @@ export default function Cases() {
                     src={thumbUrl(c.location)}
                     alt={c.title}
                     fill
+                    sizes={span === 2
+                      ? '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 66vw'
+                      : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+                    priority={i === 0}
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Gradient tint */}
@@ -165,79 +190,152 @@ export default function Cases() {
         </div>
       </section>
 
-      {/* Video Modal */}
+      {/* Strip Modal */}
       <AnimatePresence>
         {modalCase && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-150 flex items-center justify-center bg-black/95 px-4"
-            onClick={() => setModalCase(null)}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-150 bg-black overflow-hidden"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-4xl"
-              onClick={(e) => e.stopPropagation()}
+            {/* Close */}
+            <button
+              onClick={() => setModalCase(null)}
+              className="absolute top-6 right-6 z-20 text-white/60 hover:text-white transition-colors text-sm uppercase tracking-widest flex items-center gap-2"
             >
-              {/* Close */}
-              <button
-                onClick={() => setModalCase(null)}
-                className="absolute -top-10 right-0 text-white/60 hover:text-white transition-colors text-sm uppercase tracking-widest flex items-center gap-2"
+              Fechar <span className="text-2xl leading-none">×</span>
+            </button>
+
+            {/* Sliding strip */}
+            <div className="relative w-full h-full">
+              {/* Edge gradients — desktop only */}
+              {!isMobile && <>
+                <div className="absolute inset-y-0 left-0 w-40 z-30 pointer-events-none" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.85), transparent)' }} />
+                <div className="absolute inset-y-0 right-0 w-40 z-30 pointer-events-none" style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.85), transparent)' }} />
+              </>}
+              <motion.div
+                className="flex h-full"
+                animate={{
+                  x: isMobile
+                    ? `calc(-${carouselIndex} * 100vw)`
+                    : `calc(50vw - ${carouselIndex} * (100vw / 3.2) - (100vw / 3.2) / 2)`,
+                }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                style={{ width: isMobile ? `calc(${ALL_CASES.length} * 100vw)` : `calc(${ALL_CASES.length} * (100vw / 3.2))` }}
               >
-                Fechar <span className="text-xl leading-none">×</span>
-              </button>
+                {ALL_CASES.map((c, i) => {
+                  const isActive = i === carouselIndex;
+                  return (
+                    <div
+                      key={c.id}
+                      onClick={() => { setCarouselIndex(i); setModalCase(c); }}
+                      className="relative h-full shrink-0 cursor-pointer overflow-hidden"
+                      style={{ width: isMobile ? '100vw' : 'calc(100vw / 3.2)' }}
+                    >
+                      {/* Thumbnail (always present as background) */}
+                      <Image
+                        src={thumbUrl(c.location)}
+                        alt={c.title}
+                        fill
+                        className="object-cover"
+                        sizes="33vw"
+                      />
 
-              {/* Video */}
-              <div className="relative aspect-video bg-black">
-                <iframe
-                  key={modalCase.id}
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${modalCase.videoId}?autoplay=1&mute=0`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+                      {/* Video iframe — cover-fills the active card */}
+                      {isActive && (
+                        <iframe
+                          ref={iframeRef}
+                          key={c.id}
+                          className="absolute z-10 pointer-events-none"
+                          style={{
+                            top: '50%',
+                            left: '50%',
+                            width: 'max(100%, 177.78vh)',
+                            height: 'max(100%, 56.25vw)',
+                            transform: 'translate(-50%, -50%)',
+                          }}
+                          src={`https://www.youtube.com/embed/${c.videoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoId}&enablejsapi=1`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      )}
 
-              {/* Info + Navigation */}
-              <div className="flex items-center justify-between mt-4 px-1">
-                <div>
-                  <span className="text-brand text-xs uppercase tracking-widest">{modalCase.category}</span>
-                  <h3 className="text-white font-bold mt-1">{modalCase.title} — {modalCase.location}</h3>
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => navigate(-1)}
-                    className="w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
-                    aria-label="Anterior"
-                  >
-                    ←
-                  </button>
-                  <button
-                    onClick={() => navigate(1)}
-                    className="w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
-                    aria-label="Próximo"
-                  >
-                    →
-                  </button>
-                </div>
-              </div>
+                      {/* Dark overlay — hidden on active (video shows instead) */}
+                      <div
+                        className="absolute inset-0 transition-all duration-500"
+                        style={{ background: isActive ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.55)', zIndex: isActive ? 0 : 1 }}
+                      />
 
-              {/* Dots */}
-              <div className="flex justify-center gap-2 mt-4">
-                {ALL_CASES.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => { setCarouselIndex(i); setModalCase(ALL_CASES[i]); }}
-                    className={`w-1.5 h-1.5 rounded-full transition-all ${i === carouselIndex ? 'bg-brand w-4' : 'bg-white/30'}`}
-                  />
-                ))}
-              </div>
-            </motion.div>
+                      {/* Location badge */}
+                      <div className="absolute top-6 left-5 z-20 flex items-center gap-2">
+                        <span
+                          className="w-3 h-3 rounded-full shrink-0 transition-all duration-500"
+                          style={{ background: isActive ? 'var(--brand)' : 'rgba(255,255,255,0.4)' }}
+                        />
+                        <span className="text-white text-[11px] uppercase tracking-[0.2em] font-semibold">
+                          {c.location}
+                        </span>
+                      </div>
+
+                      {/* Active: play/pause + title + nav */}
+                      {isActive && (
+                        <>
+                          {/* Play/Pause button — center */}
+                          <button
+                            onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+                            className="absolute inset-0 z-20 flex items-center justify-center group"
+                            aria-label={isPlaying ? 'Pausar' : 'Reproduzir'}
+                          >
+                            <div className={`w-16 h-16 rounded-full border-2 border-white/70 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+                              {isPlaying ? (
+                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                                </svg>
+                              ) : (
+                                <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M8 5v14l11-7z"/>
+                                </svg>
+                              )}
+                            </div>
+                          </button>
+
+                          {/* Title bottom */}
+                          <div className="absolute bottom-24 left-5 z-20">
+                            <span className="text-brand text-xs uppercase tracking-widest">{c.category}</span>
+                            <h3 className="text-white font-bold text-xl mt-1">{c.title}</h3>
+                            <p className="text-white/60 text-sm">{c.subtitle}</p>
+                          </div>
+
+                          {/* Navigation arrows */}
+                          <div
+                            className="absolute bottom-8 left-1/2 z-20 flex gap-3"
+                            style={{ transform: 'translateX(-50%)' }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <button
+                              onClick={() => navigate(-1)}
+                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand hover:text-white transition-all"
+                              aria-label="Anterior"
+                            >
+                              ←
+                            </button>
+                            <button
+                              onClick={() => navigate(1)}
+                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand hover:text-white transition-all"
+                              aria-label="Próximo"
+                            >
+                              →
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

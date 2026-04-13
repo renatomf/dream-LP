@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar';
 import Hero from './components/sections/Hero';
-import Eventos from './components/sections/Eventos';
+import Events from './components/sections/Events';
 import Statement from './components/sections/Statement';
 import Cases from './components/sections/Cases';
 import Clients from './components/sections/Clients';
@@ -17,7 +17,7 @@ export default function Home() {
       <main>
         <div className="h-screen flex flex-col">
           <Hero />
-          <Eventos />
+          <Events />
         </div>
         <Statement />
         <Cases />

@@ -25,7 +25,7 @@ export default function Eventos() {
           {items.map((event, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-18 px-6 text-xs md:text-3xl font-medium tracking-[0.15em] text-[#E3E3E3]"
+              className="inline-flex items-center gap-6 md:gap-18 px-6 text-xl md:text-3xl font-medium tracking-[0.15em] text-[#E3E3E3]"
             >
               {event}
               <span className="w-1 h-1 rounded-full bg-brand shrink-0" />

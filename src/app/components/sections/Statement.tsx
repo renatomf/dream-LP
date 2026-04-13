@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Statement() {
   return (
-    <section className="relative bg-white py-28 md:py-40 overflow-hidden">
+    <section className="relative bg-white pt-10 pb-10 md:py-20 overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-8 flex items-center gap-20 md:gap-32">
         
         {/* Text */}

@@ -57,9 +57,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
+  background: transparent;
+  transition: background 0.3s;
+}
+
+html:hover::-webkit-scrollbar-thumb,
+html.scrolling::-webkit-scrollbar-thumb {
   background: var(--brand);
 }
