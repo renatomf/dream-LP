@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ScrollWatcher from "./components/ScrollWatcher";
+import ContactButtons from "./components/ContactButtons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${geistSans.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="bg-background text-foreground min-h-screen overflow-x-hidden">
         <ScrollWatcher />
+        <ContactButtons />
         {children}
       </body>
     </html>

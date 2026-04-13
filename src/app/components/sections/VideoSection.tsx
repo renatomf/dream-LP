@@ -27,8 +27,8 @@ export default function VideoSection() {
   return (
     <section className="relative bg-white pt-0 pb-6 overflow-hidden">
       <div
-        className="group mx-4 sm:mx-8 lg:mx-16 rounded-2xl overflow-hidden relative"
-        style={{ aspectRatio: '16/6' }}
+        className="group mx-24 sm:mx-40 lg:mx-64 rounded-2xl overflow-hidden relative"
+        style={{ aspectRatio: '16/5' }}
       >
         <iframe
           ref={iframeRef}
@@ -37,7 +37,7 @@ export default function VideoSection() {
           allow="autoplay; encrypted-media"
           allowFullScreen
           className="border-0 absolute left-0 top-1/2 -translate-y-1/2"
-          style={{ width: '100%', height: '150%' }}
+          style={{ width: '100%', height: '200%' }}
         />
 
         {/* Hover overlay */}
