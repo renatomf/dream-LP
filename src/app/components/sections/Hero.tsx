@@ -12,7 +12,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex-1 overflow-hidden bg-black">
+    <section id="hero" className="relative h-[83vh] overflow-hidden bg-black">
       {/* Fallback gradient shown behind the video */}
       <div className="absolute inset-0 bg-linear-to-br from-zinc-900 via-black to-zinc-900" />
 
@@ -71,7 +71,7 @@ export default function Hero() {
 
         {/* Bottom row — text overflows section bottom, clipped by overflow-hidden */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-start gap-6 md:gap-4 select-none">
-          <h1 className="text-[20vw] sm:text-[16vw] md:text-[20vw] lg:text-[23vw] [font-family:var(--font-geist-sans)] font-bold text-white leading-none tracking-tighter lowercase translate-y-[10%] md:translate-y-[20%] text-center md:text-left">
+          <h1 className="text-[20vw] sm:text-[16vw] md:text-[20vw] lg:text-[23vw] [font-family:var(--font-metropolis-bold)] text-white leading-none tracking-tighter lowercase translate-y-[10%] md:translate-y-[28%] text-center md:text-left">
             dream
           </h1>
 

@@ -33,22 +33,22 @@ interface Case {
 }
 
 const ALL_CASES: Case[] = [
-  { id: 1,  title: 'Aurora Boreal',  subtitle: 'neve e experiências únicas.',        location: 'Finlândia',   category: 'Incentivo',  bg: 'from-blue-950 to-indigo-950',    videoId: 'dQw4w9WgXcQ' },
-  { id: 2,  title: 'Toscana',        subtitle: 'distância que une',       location: 'Playa del Carmen',      category: 'Convenção',  bg: 'from-amber-950 to-orange-950',   videoId: 'dQw4w9WgXcQ' },
-  { id: 3,  title: 'Desert Drive',   subtitle: 'adrenalina pura',         location: 'Dubai',       category: 'Premiação',  bg: 'from-yellow-950 to-amber-900',   videoId: 'dQw4w9WgXcQ' },
-  { id: 4,  title: 'Summit',         subtitle: 'onde ideias nascem',      location: 'Suíça',       category: 'Lançamento', bg: 'from-slate-900 to-zinc-800',     videoId: 'dQw4w9WgXcQ' },
-  { id: 5,  title: 'Champions',      subtitle: 'a noite do triunfo',      location: 'Lisboa',      category: 'Premiação',  bg: 'from-green-950 to-teal-950',     videoId: 'dQw4w9WgXcQ' },
-  { id: 6,  title: 'Grand Prix',     subtitle: 'velocidade e estilo',     location: 'Mônaco',      category: 'Incentivo',  bg: 'from-red-950 to-rose-950',       videoId: 'dQw4w9WgXcQ' },
-  { id: 7,  title: 'Connected',      subtitle: 'tecnologia e pessoas',    location: 'Berlim',      category: 'Convenção',  bg: 'from-violet-950 to-purple-950',  videoId: 'dQw4w9WgXcQ' },
-  { id: 8,  title: 'Natura',         subtitle: 'sustentabilidade em foco',location: 'Costa Rica',  category: 'Ativação',   bg: 'from-emerald-950 to-green-900',  videoId: 'dQw4w9WgXcQ' },
-  { id: 9,  title: 'Altitude',       subtitle: 'conquistas no topo',      location: 'Nepal',       category: 'Incentivo',  bg: 'from-sky-950 to-blue-900',       videoId: 'dQw4w9WgXcQ' },
-  { id: 10, title: 'Silk Road',      subtitle: 'cultura e conexão',       location: 'Japão',       category: 'Ativação',   bg: 'from-pink-950 to-fuchsia-950',   videoId: 'dQw4w9WgXcQ' },
-  { id: 11, title: 'Aurora Boreal',  subtitle: 'Nova experiência',        location: 'Finlândia',   category: 'Incentivo',  bg: 'from-blue-950 to-indigo-950',    videoId: 'dQw4w9WgXcQ' },
-  { id: 12, title: 'Toscana',        subtitle: 'distância que une',       location: 'Itália',      category: 'Convenção',  bg: 'from-amber-950 to-orange-950',   videoId: 'dQw4w9WgXcQ' },
-  { id: 13, title: 'Desert Drive',   subtitle: 'adrenalina pura',         location: 'Dubai',       category: 'Premiação',  bg: 'from-yellow-950 to-amber-900',   videoId: 'dQw4w9WgXcQ' },
-  { id: 14, title: 'Summit',         subtitle: 'onde ideias nascem',      location: 'Suíça',       category: 'Lançamento', bg: 'from-slate-900 to-zinc-800',     videoId: 'dQw4w9WgXcQ' },
-  { id: 15, title: 'Champions',      subtitle: 'a noite do triunfo',      location: 'Lisboa',      category: 'Premiação',  bg: 'from-green-950 to-teal-950',     videoId: 'dQw4w9WgXcQ' },
-  { id: 16, title: 'Grand Prix',     subtitle: 'velocidade e estilo',     location: 'Mônaco',      category: 'Incentivo',  bg: 'from-red-950 to-rose-950',       videoId: 'dQw4w9WgXcQ' },
+  { id: 1,  title: 'Aurora Boreal',  subtitle: 'neve e experiências únicas.',        location: 'Finlândia',   category: 'Incentivo',  bg: 'from-blue-950 to-indigo-950',    videoId: 'c5rWB_fS5ao' },
+  { id: 2,  title: 'Toscana',        subtitle: 'distância que une',       location: 'Playa del Carmen',      category: 'Convenção',  bg: 'from-amber-950 to-orange-950',   videoId: 'c5rWB_fS5ao' },
+  { id: 3,  title: 'Desert Drive',   subtitle: 'adrenalina pura',         location: 'Dubai',       category: 'Premiação',  bg: 'from-yellow-950 to-amber-900',   videoId: 'c5rWB_fS5ao' },
+  { id: 4,  title: 'Summit',         subtitle: 'onde ideias nascem',      location: 'Suíça',       category: 'Lançamento', bg: 'from-slate-900 to-zinc-800',     videoId: 'c5rWB_fS5ao' },
+  { id: 5,  title: 'Champions',      subtitle: 'a noite do triunfo',      location: 'Lisboa',      category: 'Premiação',  bg: 'from-green-950 to-teal-950',     videoId: 'c5rWB_fS5ao' },
+  { id: 6,  title: 'Grand Prix',     subtitle: 'velocidade e estilo',     location: 'Mônaco',      category: 'Incentivo',  bg: 'from-red-950 to-rose-950',       videoId: 'c5rWB_fS5ao' },
+  { id: 7,  title: 'Connected',      subtitle: 'tecnologia e pessoas',    location: 'Berlim',      category: 'Convenção',  bg: 'from-violet-950 to-purple-950',  videoId: 'c5rWB_fS5ao' },
+  { id: 8,  title: 'Natura',         subtitle: 'sustentabilidade em foco',location: 'Costa Rica',  category: 'Ativação',   bg: 'from-emerald-950 to-green-900',  videoId: 'c5rWB_fS5ao' },
+  { id: 9,  title: 'Altitude',       subtitle: 'conquistas no topo',      location: 'Nepal',       category: 'Incentivo',  bg: 'from-sky-950 to-blue-900',       videoId: 'c5rWB_fS5ao' },
+  { id: 10, title: 'Silk Road',      subtitle: 'cultura e conexão',       location: 'Japão',       category: 'Ativação',   bg: 'from-pink-950 to-fuchsia-950',   videoId: 'c5rWB_fS5ao' },
+  { id: 11, title: 'Aurora Boreal',  subtitle: 'Nova experiência',        location: 'Finlândia',   category: 'Incentivo',  bg: 'from-blue-950 to-indigo-950',    videoId: 'c5rWB_fS5ao' },
+  { id: 12, title: 'Toscana',        subtitle: 'distância que une',       location: 'Itália',      category: 'Convenção',  bg: 'from-amber-950 to-orange-950',   videoId: 'c5rWB_fS5ao' },
+  { id: 13, title: 'Desert Drive',   subtitle: 'adrenalina pura',         location: 'Dubai',       category: 'Premiação',  bg: 'from-yellow-950 to-amber-900',   videoId: 'c5rWB_fS5ao' },
+  { id: 14, title: 'Summit',         subtitle: 'onde ideias nascem',      location: 'Suíça',       category: 'Lançamento', bg: 'from-slate-900 to-zinc-800',     videoId: 'c5rWB_fS5ao' },
+  { id: 15, title: 'Champions',      subtitle: 'a noite do triunfo',      location: 'Lisboa',      category: 'Premiação',  bg: 'from-green-950 to-teal-950',     videoId: 'c5rWB_fS5ao' },
+  { id: 16, title: 'Grand Prix',     subtitle: 'velocidade e estilo',     location: 'Mônaco',      category: 'Incentivo',  bg: 'from-red-950 to-rose-950',       videoId: 'c5rWB_fS5ao' },
 ];
 
 // Ciclo de 16 itens (grid de 3 colunas):
@@ -107,12 +107,12 @@ export default function Cases() {
 
   return (
     <>
-      <section id="cases" className="bg-white pt-4 pb-20 md:pt-10 md:pb-28">
+      <section id="cases" className="bg-white pt-4 pb-20 md:pt-0 md:pb-28 scroll-mt-20">
         <div className="max-w-6xl mx-auto px-8">
 
           {/* Heading */}
           <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight caret-transparent">
               Cases<span className="text-brand">_</span>
             </h2>
           </div>
@@ -203,7 +203,7 @@ export default function Cases() {
             {/* Close */}
             <button
               onClick={() => setModalCase(null)}
-              className="absolute top-6 right-6 z-20 text-white/60 hover:text-white transition-colors text-sm uppercase tracking-widest flex items-center gap-2"
+              className="absolute top-5 right-5 z-10 text-white hover:text-[#e85d04] transition-colors text-sm uppercase tracking-widest flex items-center gap-2"
             >
               Fechar <span className="text-2xl leading-none">×</span>
             </button>
@@ -261,6 +261,7 @@ export default function Cases() {
                           allowFullScreen
                         />
                       )}
+
 
                       {/* Dark overlay — hidden on active (video shows instead) */}
                       <div

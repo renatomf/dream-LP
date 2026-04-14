@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ScrollWatcher from "./components/ScrollWatcher";
 import ContactButtons from "./components/ContactButtons";
@@ -14,6 +15,12 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["700"],
+});
+
+const metropolisBold = localFont({
+  src: "../../public/fonts/metropolis.bold.otf",
+  variable: "--font-metropolis-bold",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html lang="pt-BR" className={`${geistSans.variable} ${spaceGrotesk.variable} ${metropolisBold.variable} antialiased`}>
       <body className="bg-background text-foreground min-h-screen overflow-x-hidden">
         <ScrollWatcher />
         <ContactButtons />

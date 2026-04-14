@@ -27,18 +27,21 @@ export default function VideoSection() {
   return (
     <section className="relative bg-white pt-0 pb-6 overflow-hidden">
       <div
-        className="group mx-24 sm:mx-40 lg:mx-64 rounded-2xl overflow-hidden relative"
-        style={{ aspectRatio: '16/5' }}
+        className="group mx-0 md:mx-20 2xl:mx-64 sm:rounded-2xl overflow-hidden relative aspect-16/10 sm:aspect-16/7"
       >
-        <iframe
-          ref={iframeRef}
-          src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&enablejsapi=1`}
-          title="Video"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          className="border-0 absolute left-0 top-1/2 -translate-y-1/2"
-          style={{ width: '100%', height: '200%' }}
-        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ aspectRatio: '16/9', minHeight: '100%', minWidth: '100%' }}
+        >
+          <iframe
+            ref={iframeRef}
+            src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&enablejsapi=1`}
+            title="Video"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="border-0 w-full h-full"
+          />
+        </div>
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

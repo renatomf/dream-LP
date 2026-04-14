@@ -21,11 +21,11 @@ const FacebookIcon = () => (
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer id="conversar" className="bg-black text-white scroll-mt-20">
       {/* Top: logo + headline */}
       <div className="max-w-6xl mx-auto px-8 pt-16 pb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-        <div className="text-[12vw] md:text-[4vw] font-black tracking-tighter lowercase leading-none">
-          dream<span className="text-[#FF5C00]">.</span>
+        <div className="text-[12vw] md:text-[4vw] [font-family:var(--font-metropolis-bold)] tracking-tighter lowercase leading-none">
+          dream<span className="text-[#FF5C00] text-6xl ml-0.5 ">.</span>
         </div>
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight md:mr-auto md:ml-22">
           Let&apos;s Dream<br />together

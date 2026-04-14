@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TestimonialItem {
@@ -44,20 +44,40 @@ const TESTIMONIALS: TestimonialItem[] = [
 
 export default function Testimonial() {
   const [index, setIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const current = TESTIMONIALS[index];
+
+  function postCommand(command: string) {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func: command }),
+      '*'
+    );
+  }
 
   function prev() {
     setIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    setPlaying(true);
   }
   function next() {
     setIndex((i) => (i + 1) % TESTIMONIALS.length);
+    setPlaying(true);
+  }
+
+  function togglePlay() {
+    if (playing) {
+      postCommand('pauseVideo');
+    } else {
+      postCommand('playVideo');
+    }
+    setPlaying(!playing);
   }
 
   return (
     <section className="bg-white overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-120">
         {/* Left: Embed */}
-        <div className="relative min-h-60 md:min-h-0 md:rounded-tr-3xl md:rounded-br-3xl overflow-hidden bg-zinc-900">
+        <div className="group relative min-h-60 md:min-h-0 md:h-full md:rounded-tr-3xl md:rounded-br-3xl overflow-hidden bg-zinc-900 self-stretch">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
@@ -67,16 +87,64 @@ export default function Testimonial() {
               transition={{ duration: 0.5 }}
               className="absolute inset-0"
             >
-              <iframe
-                src={`https://www.youtube.com/embed/${current.videoId}?autoplay=1&mute=1&loop=1&playlist=${current.videoId}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1`}
-                title={`Depoimento de ${current.author}`}
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                className="border-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                style={{ width: '177.78%', aspectRatio: '16/9', minHeight: '100%', minWidth: '100%' }}
-              />
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ aspectRatio: '16/9', minHeight: '100%', minWidth: '100%' }}
+              >
+                <iframe
+                  ref={iframeRef}
+                  src={`https://www.youtube.com/embed/${current.videoId}?autoplay=1&mute=1&loop=1&playlist=${current.videoId}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&enablejsapi=1`}
+                  title={`Depoimento de ${current.author}`}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  className="border-0 w-full h-full"
+                />
+              </div>
             </motion.div>
           </AnimatePresence>
+
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+          {/* Play/Pause button */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button
+              onClick={togglePlay}
+              className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center cursor-pointer"
+            >
+              {playing ? (
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6 text-white translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+          {/* Mobile prev/next arrows — bottom right */}
+          <div className="md:hidden absolute bottom-3 right-3 flex items-center gap-2">
+            <button
+              onClick={prev}
+              className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-brand"
+              aria-label="Anterior"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M5 12l6-6M5 12l6 6" />
+              </svg>
+            </button>
+            <button
+              onClick={next}
+              className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-brand"
+              aria-label="Próximo"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M14 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Right: Quote */}

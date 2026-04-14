@@ -10,9 +10,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -37,14 +42,16 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 py-6 transition-all duration-500`}
+        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 py-6 transition-all duration-500 ${
+          scrolled ? "bg-black/90 backdrop-blur-md py-4 border-b border-white/5" : ""
+        }`}
       >
         <Link
           href="/"
-          className="text-white text-xl font-bold tracking-[0.15em] lowercase flex items-end"
+          className="text-white text-xl [font-family:var(--font-metropolis-bold)] tracking-[0.15em] lowercase flex items-end"
         >
           dream
-          <span className="ml-1 w-1 h-1 bg-[#FF5500] rounded-full inline-block mb-[0.27em]"></span>
+          <span className="ml-0.5 w-1 h-1 bg-[#FF5500] rounded-full inline-block mb-[0.3em]"></span>
         </Link>
 
         {/* <div className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-white/60">
@@ -64,7 +71,7 @@ export default function Navbar() {
           className="text-white/70 hover:text-white transition-colors"
           aria-label="Abrir menu"
         >
-          <Menu size={22} strokeWidth={1.5} />
+          <Menu size={24} strokeWidth={1.5} className="cursor-pointer" />
         </button>
       </nav>
 
@@ -96,7 +103,7 @@ export default function Navbar() {
               duration: 0.35,
               ease: [0.4, 0, 0.2, 1],
             }}
-            className="fixed top-0 right-0 h-full w-72 z-120 bg-[#0a0a0a] border-l border-white/3 flex flex-col px-8 py-8"
+            className="fixed top-0 right-0 h-full w-full md:w-72 z-120 bg-[#0a0a0a] md:border-l md:border-white/3 flex flex-col px-8 py-8"
           >
             <div className="flex items-center justify-between mb-12">
               <span className="text-red-700 text-sm uppercase tracking-widest font-light">
