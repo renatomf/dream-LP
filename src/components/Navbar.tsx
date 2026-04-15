@@ -48,7 +48,7 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className="text-white text-xl [font-family:var(--font-metropolis-bold)] tracking-[0.15em] lowercase flex items-end"
+          className="text-white text-xl [font-family:var(--font-metropolis-bold)] tracking-wide lowercase flex items-end"
         >
           dream
           <span className="ml-0.5 w-1 h-1 bg-[#FF5500] rounded-full inline-block mb-[0.3em]"></span>

@@ -44,10 +44,10 @@ export default function Hero() {
             <path id="topArc" d="M 20,110 A 90,90 0 0,1 200,110" />
             <path id="bottomArc" d="M 200,110 A 90,90 0 0,1 20,110" />
           </defs>
-          <text fill="white" fontSize={20} letterSpacing={10} fontFamily="var(--font-geist-sans), sans-serif" fontWeight={100}>
+          <text fill="white" fontSize={20} letterSpacing={10} fontFamily="var(--font-space-grotesk), sans-serif" fontWeight={100}>
             <textPath href="#topArc" startOffset="50%" textAnchor="middle">YOU DREAM</textPath>
           </text>
-          <text fill="white" fontSize={20} letterSpacing={10} fontFamily="var(--font-geist-sans), sans-serif" fontWeight={100}>
+          <text fill="white" fontSize={20} letterSpacing={10} fontFamily="var(--font-space-grotesk), sans-serif" fontWeight={100}>
             <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">WE DELIVER</textPath>
           </text>
           <circle cx="20" cy="110" r="5" fill="#e02020" />
@@ -75,8 +75,8 @@ export default function Hero() {
             dream
           </h1>
 
-          <div className="text-center md:text-left pb-[10%] md:pb-[5%] md:ml-[4vw]">
-            <p className="text-[6vw] sm:text-[4vw] md:text-[2vw] lg:text-[1.3vw] text-white/70 tracking-[0.2em] leading-relaxed">
+          <div className="text-center md:text-left pb-[10%] md:pb-[3%] md:ml-[4vw]">
+            <p className="text-[6vw] sm:text-[4vw] md:text-[2vw] lg:text-[1.4vw] text-white tracking-wide leading-relaxed font-light">
               Comunicação
               <br />e Eventos
             </p>
