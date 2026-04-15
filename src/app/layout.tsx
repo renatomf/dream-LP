@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import ScrollWatcher from "./components/ScrollWatcher";
-import ContactButtons from "./components/ContactButtons";
+import ScrollWatcher from "../components/ScrollWatcher";
+import ContactButtons from "../components/ContactButtons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

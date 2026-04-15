@@ -1,4 +1,5 @@
-// Ajuste width e height de cada logo individualmente aqui
+import Image from "next/image";
+
 const CLIENTS = [
   { name: 'Facebook',  src: '/images/facebook.png',  width: 200, height: 50 },
   { name: 'Banco PAN', src: '/images/pan.png',        width: 200, height: 50 },
@@ -32,10 +33,11 @@ export default function Clients() {
               key={i}
               className="inline-flex items-center justify-center px-6 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={client.src}
                 alt={client.name}
+                width={client.width}
+                height={client.height}
                 style={{
                   width: `clamp(${client.width * 0.45}px, ${client.width * 0.08}vw + ${client.width * 0.3}px, ${client.width}px)`,
                   height: `clamp(${client.height * 0.45}px, ${client.height * 0.08}vw + ${client.height * 0.3}px, ${client.height}px)`,

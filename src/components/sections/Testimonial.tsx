@@ -88,7 +88,7 @@ export default function Testimonial() {
               className="absolute inset-0"
             >
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.05]"
                 style={{ aspectRatio: '16/9', minHeight: '100%', minWidth: '100%' }}
               >
                 <iframe
@@ -151,10 +151,10 @@ export default function Testimonial() {
         <div className="flex flex-col justify-start px-8 md:px-16 pt-0 pb-10 bg-white">
           <div className="max-w-sm">
             {/* Giant orange quote mark */}
-            <div className="text-[240px] text-brand font-bold leading-none mb-0 select-none" style={{ fontFamily: 'var(--font-space-grotesk)' }}>&ldquo;</div>
+            <div className="text-[160px] md:text-[240px] text-brand font-bold leading-none mb-0 select-none" style={{ fontFamily: 'var(--font-space-grotesk)' }}>&ldquo;</div>
 
             {/* Section heading */}
-            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 leading-tight mb-6 -mt-24">
+            <h2 className="text-2xl md:text-4xl font-bold text-zinc-900 leading-tight mb-6 -mt-16 md:-mt-24">
               A confiança<br />dos nossos clientes
             </h2>
 
@@ -165,7 +165,7 @@ export default function Testimonial() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="text-base md:text-lg text-zinc-500 leading-relaxed mb-8"
+                className="text-sm md:text-lg text-zinc-500 leading-relaxed mb-8"
               >
                 &ldquo;{current.quote}&rdquo;
               </motion.blockquote>
@@ -179,8 +179,8 @@ export default function Testimonial() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <p className="text-zinc-900 font-semibold">{current.author}</p>
-                <p className="text-zinc-400 text-sm mt-0.5">
+                <p className="text-zinc-900 font-semibold text-sm md:text-base">{current.author}</p>
+                <p className="text-zinc-400 text-xs md:text-sm mt-0.5">
                   {current.role} · {current.company}
                 </p>
               </motion.div>
