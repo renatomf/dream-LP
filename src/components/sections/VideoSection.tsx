@@ -26,8 +26,9 @@ export default function VideoSection() {
 
   return (
     <section className="relative bg-white pt-0 pb-6 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-0 md:px-8">
       <div
-        className="group mx-0 md:mx-20 2xl:mx-64 sm:rounded-2xl overflow-hidden relative aspect-16/10 sm:aspect-16/7"
+        className="group rounded-none md:rounded-2xl overflow-hidden relative aspect-16/10 md:aspect-16/7"
       >
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -65,6 +66,7 @@ export default function VideoSection() {
             )}
           </button>
         </div>
+      </div>
       </div>
     </section>
   );

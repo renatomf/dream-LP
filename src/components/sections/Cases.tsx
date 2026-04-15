@@ -118,7 +118,7 @@ export default function Cases() {
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {visibleCases.map((c, i) => {
               const span = getSpan(i);
               return (
@@ -132,7 +132,7 @@ export default function Cases() {
                   className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl ${
                     span === 2 ? 'lg:col-span-2' : 'lg:col-span-1'
                   }`}
-                  style={{ height: '480px' }}
+                  style={{ height: 'clamp(330px, 50vw, 480px)' }}
                 >
                   {/* Thumbnail */}
                   <Image
@@ -154,7 +154,7 @@ export default function Cases() {
                   {/* Country badge — top left */}
                   <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0 mt-2" />
-                    <span className="text-white text-[12px] uppercase font-semibold mt-2" style={{ letterSpacing: '0.3em' }}>
+                    <span className="text-white text-[12px] uppercase tracking-widest font-semibold mt-2">
                       {c.location}
                     </span>
                   </div>
@@ -166,7 +166,8 @@ export default function Cases() {
                         <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.12v15.76a1.5 1.5 0 0 0 2.3 1.28l13.5-7.88a1.5 1.5 0 0 0 0-2.56L6.3 2.84z" />
                       </svg>
                     </div>
-                    <h3 className="text-white font-bold text-lg leading-tight w-4/5 line-clamp-3">{c.title},<br /><span className="text-white/70">{c.subtitle}</span></h3>
+                    <h3 className="text-white font-bold text-lg leading-tight">{c.title},</h3>
+                    <p className="text-white/70 text-sm">{c.subtitle}</p>
                   </div>
                 </motion.button>
               );
