@@ -43,6 +43,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -50,6 +51,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  width: 100%;
 }
 
 ::selection {
