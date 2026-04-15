@@ -25,8 +25,7 @@ export default function Clients() {
         <div className="absolute right-0 top-5 bottom-0 w-12 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex items-center"
-          style={{ animation: 'marquee 12s linear infinite' }}
+          className="flex items-center marquee-fast"
         >
           {items.map((client, i) => (
             <div

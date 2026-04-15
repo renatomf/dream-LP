@@ -19,13 +19,13 @@ export default function Eventos() {
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex whitespace-nowrap"
-          style={{ animation: 'marquee 30s linear infinite' }}
+          className="flex whitespace-nowrap marquee-fast"
+          style={{ animationDuration: '25s' }}
         >
           {items.map((event, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-6 md:gap-18 px-6 text-xl md:text-3xl font-medium tracking-[0.15em] text-[#E3E3E3]"
+              className="inline-flex items-center gap-6 md:gap-18 px-6 text-xl md:text-4xl font-medium tracking-normal text-[#cbcaca]"
             >
               {event}
               <span className="w-1 h-1 rounded-full bg-brand shrink-0" />

@@ -39,8 +39,7 @@ export default function WorldTime() {
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex items-center whitespace-nowrap"
-          style={{ animation: 'marquee 12s linear infinite' }}
+          className="flex items-center whitespace-nowrap marquee-fast"
         >
           {items.map((tz, i) => (
             <TimeNode key={i} gmt={tz.gmt} city={tz.city} />
