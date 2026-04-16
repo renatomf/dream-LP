@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import ContactModal from './ContactModal';
 
 export default function ContactButtons() {
   const [modalOpen, setModalOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <>
