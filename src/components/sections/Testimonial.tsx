@@ -3,12 +3,11 @@ import { urlFor } from '@/sanity/lib/image'
 import TestimonialClient, { type TestimonialItem } from './TestimonialClient'
 
 const TESTIMONIALS_QUERY = `*[_type == "testimonial"] | order(orderRank asc){
-  _id, sectionTitle, author, company, quote, mediaType, videoId, image
+  _id, author, company, quote, mediaType, videoId, image
 }`
 
 interface SanityTestimonial {
   _id: string
-  sectionTitle?: string
   author: string
   company: string
   quote: string
@@ -22,8 +21,6 @@ export default async function Testimonial() {
 
   const raw = (data as SanityTestimonial[] | null) ?? []
 
-  const sectionTitle = raw[0]?.sectionTitle
-
   const testimonials: TestimonialItem[] = raw.map((t) => ({
     _id: t._id,
     author: t.author,
@@ -36,5 +33,5 @@ export default async function Testimonial() {
       : undefined,
   }))
 
-  return <TestimonialClient testimonials={testimonials} sectionTitle={sectionTitle} />
+  return <TestimonialClient testimonials={testimonials} />
 }

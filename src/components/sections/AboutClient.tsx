@@ -72,14 +72,17 @@ export default function AboutClient({ stats }: { stats: Stat[] }) {
             <br />É assim que transformamos eventos em experiências memoráveis
           </motion.p>
 
-          <motion.button
+          <motion.a
+            href="https://wa.me/551151833323"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="bg-[#e85d04] text-white text-sm font-medium px-7 py-3 rounded-full hover:bg-[#cf4f02] transition-colors select-none"
+            className="inline-block bg-[#e85d04] text-white text-sm font-medium px-7 py-3 rounded-full hover:bg-[#cf4f02] transition-colors select-none"
           >
             Vamos conversar
-          </motion.button>
+          </motion.a>
         </div>
       </div>
     </section>

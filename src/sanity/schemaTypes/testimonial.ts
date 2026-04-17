@@ -8,11 +8,6 @@ export default defineType({
   fields: [
     orderRankField({ type: 'testimonial' }),
     defineField({
-      name: 'sectionTitle',
-      title: 'Título do Depoimento',
-      type: 'string',
-    }),
-    defineField({
       name: 'quote',
       title: 'Depoimento',
       type: 'text',

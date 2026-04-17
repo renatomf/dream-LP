@@ -6,8 +6,15 @@ const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 
 const FALLBACK_VIDEO_ID = '4qz6x8y3tNw'
 
+interface SanityHero {
+  mediaType?: string;
+  videoId?: string;
+  image?: { asset: { _ref: string } };
+}
+
 export default async function Hero() {
-  const { data: hero } = await sanityFetch({ query: HERO_QUERY })
+  const { data } = await sanityFetch({ query: HERO_QUERY })
+  const hero = data as SanityHero | null
   const mediaType = hero?.mediaType ?? 'video'
   const videoId: string = hero?.videoId ?? FALLBACK_VIDEO_ID
   const imageUrl = hero?.image ? urlFor(hero.image).url() : null

@@ -9,7 +9,7 @@ export interface CaseItem {
   title: string;
   location: string;
   videoId: string;
-  thumbUrl: string;
+  thumbUrl?: string;
 }
 
 function getSpan(index: number): 1 | 2 {
@@ -23,7 +23,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [modalCase, setModalCase] = useState<CaseItem | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -33,6 +33,18 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
+
+  useEffect(() => {
+    if (!modalCase) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setModalCase(null); };
+    window.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [modalCase]);
 
   const visibleCases = cases.slice(0, visibleCount);
   const hasMore = visibleCount < cases.length;
@@ -90,17 +102,19 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   style={{ height: 'clamp(330px, 50vw, 480px)' }}
                 >
                   {/* Thumbnail */}
-                  <Image
-                    src={c.thumbUrl}
-                    alt={c.title}
-                    fill
-                    sizes={span === 2
-                      ? '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 66vw'
-                      : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-                    priority={i === 0}
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  {c.thumbUrl && (
+                    <Image
+                      src={c.thumbUrl}
+                      alt={c.title}
+                      fill
+                      sizes={span === 2
+                        ? '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 66vw'
+                        : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+                      priority={i === 0}
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
                   {/* Gradient tint */}
                   <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
 
@@ -187,18 +201,20 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   return (
                     <div
                       key={c._id}
-                      onClick={() => { setCarouselIndex(i); setModalCase(c); }}
+                      onClick={() => { setCarouselIndex(i); setIsPlaying(true); setModalCase(c); }}
                       className="relative h-full shrink-0 cursor-pointer overflow-hidden"
                       style={{ width: isMobile ? '100vw' : 'calc(100vw / 3.2)' }}
                     >
                       {/* Thumbnail (always present as background) */}
-                      <Image
-                        src={c.thumbUrl}
-                        alt={c.title}
-                        fill
-                        className="object-cover"
-                        sizes="33vw"
-                      />
+                      {c.thumbUrl && (
+                        <Image
+                          src={c.thumbUrl}
+                          alt={c.title}
+                          fill
+                          className="object-cover"
+                          sizes="33vw"
+                        />
+                      )}
 
                       {/* Video iframe — cover-fills the active card */}
                       {isActive && (
@@ -213,7 +229,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                             height: 'max(100%, 56.25vw)',
                             transform: 'translate(-50%, -50%)',
                           }}
-                          src={`https://www.youtube.com/embed/${c.videoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoId}&enablejsapi=1`}
+                          src={`https://www.youtube.com/embed/${c.videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoId}&enablejsapi=1`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />

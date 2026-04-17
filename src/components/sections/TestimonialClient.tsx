@@ -16,10 +16,8 @@ export interface TestimonialItem {
 
 export default function TestimonialClient({
   testimonials,
-  sectionTitle,
 }: {
   testimonials: TestimonialItem[];
-  sectionTitle?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -105,7 +103,9 @@ export default function TestimonialClient({
           {hasVideo && (
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <button
+                type="button"
                 onClick={togglePlay}
+                aria-label={playing ? 'Pausar depoimento' : 'Reproduzir depoimento'}
                 className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center cursor-pointer"
               >
                 {playing ? (
@@ -152,7 +152,7 @@ export default function TestimonialClient({
 
             {/* Section heading */}
             <h2 className="text-2xl md:text-4xl font-bold text-zinc-900 leading-tight mb-6 -mt-16 md:-mt-24">
-              {sectionTitle ?? 'A confiança dos nossos clientes'}
+              A confiança dos nossos clientes
             </h2>
 
             <AnimatePresence mode="wait">
