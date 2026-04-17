@@ -98,6 +98,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                       ? '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 66vw'
                       : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
                     priority={i === 0}
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Gradient tint */}

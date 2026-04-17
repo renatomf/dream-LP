@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
 
-const CLIENTS_QUERY = `*[_type == "client"] | order(order asc){ _id, name, logo }`
+const CLIENTS_QUERY = `*[_type == "client"] | order(orderRank asc){ _id, name, logo }`
 
 const FALLBACK_CLIENTS = [
   { _id: 'fb',   name: 'Facebook',  src: '/images/facebook.png',  width: 200, height: 50 },

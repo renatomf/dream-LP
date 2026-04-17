@@ -1,6 +1,6 @@
 import { sanityFetch } from '@/sanity/lib/live'
 
-const EVENTS_QUERY = `*[_type == "eventos"][0]{ items }`
+const EVENTS_QUERY = `*[_type == "eventos" && _id == "eventos"][0]{ items }`
 
 const FALLBACK_EVENTS = [
   'Incentivo',

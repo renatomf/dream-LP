@@ -1,10 +1,14 @@
+import { EqualIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'case',
   title: 'Case',
   type: 'document',
+  icon: EqualIcon,
   fields: [
+    orderRankField({ type: 'case' }),
     defineField({
       name: 'location',
       title: 'Localização',
@@ -31,19 +35,8 @@ export default defineType({
       description: 'Usada como thumbnail antes do vídeo carregar',
       options: { hotspot: true },
     }),
-    defineField({
-      name: 'order',
-      title: 'Ordem',
-      type: 'number',
-    }),
   ],
-  orderings: [
-    {
-      title: 'Ordem',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
-  ],
+  orderings: [orderRankOrdering],
   preview: {
     select: { title: 'title', subtitle: 'location', media: 'image' },
   },

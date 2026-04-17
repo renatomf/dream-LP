@@ -1,30 +1,43 @@
+import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
+import { urlFor } from '@/sanity/lib/image'
 
-const HERO_QUERY = `*[_type == "hero"][0]{ videoId }`
+const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 
 const FALLBACK_VIDEO_ID = '4qz6x8y3tNw'
 
 export default async function Hero() {
   const { data: hero } = await sanityFetch({ query: HERO_QUERY })
+  const mediaType = hero?.mediaType ?? 'video'
   const videoId: string = hero?.videoId ?? FALLBACK_VIDEO_ID
+  const imageUrl = hero?.image ? urlFor(hero.image).url() : null
 
   return (
     <section id="hero" className="relative h-[83vh] overflow-hidden bg-black">
-      {/* Fallback gradient shown behind the video */}
+      {/* Fallback gradient shown behind the media */}
       <div className="absolute inset-0 bg-linear-to-br from-zinc-900 via-black to-zinc-900" />
 
-      {/* YouTube background */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60 pointer-events-none"
-        style={{ width: 'max(100%, 177.78vh)', height: 'max(100%, 56.25vw)' }}
-      >
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1`}
-          allow="autoplay; encrypted-media"
-          className="w-full h-full border-0"
-          title="Hero background"
+      {mediaType === 'image' && imageUrl !== null ? (
+        <Image
+          src={imageUrl}
+          alt="Hero background"
+          fill
+          className="object-cover opacity-60 pointer-events-none"
+          priority
         />
-      </div>
+      ) : (
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60 pointer-events-none"
+          style={{ width: 'max(100%, 177.78vh)', height: 'max(100%, 56.25vw)' }}
+        >
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1`}
+            allow="autoplay; encrypted-media"
+            className="w-full h-full border-0"
+            title="Hero background"
+          />
+        </div>
+      )}
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20" />

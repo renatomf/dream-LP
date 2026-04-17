@@ -1,10 +1,12 @@
 import { defineField, defineType } from 'sanity'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'testimonial',
   title: 'Depoimento',
   type: 'document',
   fields: [
+    orderRankField({ type: 'testimonial' }),
     defineField({
       name: 'sectionTitle',
       title: 'Título do Depoimento',
@@ -30,31 +32,34 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'mediaType',
+      title: 'Tipo de mídia',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Vídeo (YouTube)', value: 'video' },
+          { title: 'Imagem', value: 'image' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'video',
+    }),
+    defineField({
       name: 'videoId',
       title: 'YouTube Video ID',
       type: 'string',
-      description: 'Apenas o ID do vídeo (ex: GwG92EaFTd8). Se preenchido, o vídeo tem prioridade sobre a imagem.',
+      description: 'Apenas o ID do vídeo (ex: GwG92EaFTd8)',
+      hidden: ({ document }) => document?.mediaType !== 'video',
     }),
     defineField({
       name: 'image',
-      title: 'Imagem (fallback)',
+      title: 'Imagem',
       type: 'image',
-      description: 'Usada quando não há vídeo.',
       options: { hotspot: true },
-    }),
-    defineField({
-      name: 'sortOrder',
-      title: 'Ordem',
-      type: 'number',
+      hidden: ({ document }) => document?.mediaType !== 'image',
     }),
   ],
-  orderings: [
-    {
-      title: 'Ordem',
-      name: 'orderAsc',
-      by: [{ field: 'sortOrder', direction: 'asc' }],
-    },
-  ],
+  orderings: [orderRankOrdering],
   preview: {
     select: { title: 'author', subtitle: 'company' },
     prepare({ title, subtitle }: { title?: string; subtitle?: string }) {

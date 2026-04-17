@@ -2,7 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
 import CasesClient, { type CaseItem } from './CasesClient'
 
-const CASES_QUERY = `*[_type == "case"] | order(order asc){ _id, title, location, videoId, image }`
+const CASES_QUERY = `*[_type == "case"] | order(orderRank asc){ _id, title, location, videoId, image }`
 
 
 interface SanityCase {

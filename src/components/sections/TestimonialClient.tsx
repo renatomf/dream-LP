@@ -9,6 +9,7 @@ export interface TestimonialItem {
   quote: string;
   author: string;
   company: string;
+  mediaType?: string;
   videoId?: string;
   imageUrl?: string;
 }
@@ -52,7 +53,7 @@ export default function TestimonialClient({
 
   if (!current) return null;
 
-  const hasVideo = Boolean(current.videoId);
+  const hasVideo = current.mediaType === 'video' && Boolean(current.videoId);
 
   return (
     <section className="bg-white overflow-hidden">
@@ -82,7 +83,7 @@ export default function TestimonialClient({
                     className="border-0 w-full h-full"
                   />
                 </div>
-              ) : current.imageUrl ? (
+              ) : current.mediaType === 'image' && current.imageUrl ? (
                 <Image
                   src={current.imageUrl}
                   alt={`Depoimento de ${current.author}`}
