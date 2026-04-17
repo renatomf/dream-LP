@@ -1,34 +1,50 @@
-"use client";
+import Image from 'next/image'
+import { sanityFetch } from '@/sanity/lib/live'
+import { urlFor } from '@/sanity/lib/image'
 
-import { useRef, useEffect } from "react";
+const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 
-export default function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const FALLBACK_VIDEO_ID = '4qz6x8y3tNw'
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
+interface SanityHero {
+  mediaType?: string;
+  videoId?: string;
+  image?: { asset: { _ref: string } };
+}
+
+export default async function Hero() {
+  const { data } = await sanityFetch({ query: HERO_QUERY })
+  const hero = data as SanityHero | null
+  const mediaType = hero?.mediaType ?? 'video'
+  const videoId: string = hero?.videoId ?? FALLBACK_VIDEO_ID
+  const imageUrl = hero?.image ? urlFor(hero.image).url() : null
 
   return (
     <section id="hero" className="relative h-[83vh] overflow-hidden bg-black">
-      {/* Fallback gradient shown behind the video */}
+      {/* Fallback gradient shown behind the media */}
       <div className="absolute inset-0 bg-linear-to-br from-zinc-900 via-black to-zinc-900" />
 
-      {/* Video background — swap src with real footage */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover opacity-60"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-      >
-        {/* Place your video file at public/videos/hero.mp4 */}
-        <source src="/videos/hero.mp4" type="video/mp4" />
-      </video>
+      {mediaType === 'image' && imageUrl !== null ? (
+        <Image
+          src={imageUrl}
+          alt="Hero background"
+          fill
+          className="object-cover opacity-60 pointer-events-none"
+          priority
+        />
+      ) : (
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60 pointer-events-none"
+          style={{ width: 'max(100%, 177.78vh)', height: 'max(100%, 56.25vw)' }}
+        >
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1`}
+            allow="autoplay; encrypted-media"
+            className="w-full h-full border-0"
+            title="Hero background"
+          />
+        </div>
+      )}
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20" />
@@ -52,7 +68,6 @@ export default function Hero() {
           </text>
           <circle cx="20" cy="110" r="5" fill="#e02020" />
           <circle cx="200" cy="110" r="5" fill="#e02020" />
-          {/* Down arrow in the center */}
           <path
             d="M110,85 L110,118 M98,106 L110,118 L122,106"
             fill="none"
@@ -66,10 +81,8 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-between px-8 md:px-16 pb-0 pt-32">
-        {/* spacer */}
         <div />
 
-        {/* Bottom row — text overflows section bottom, clipped by overflow-hidden */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-start gap-6 md:gap-4 select-none">
           <h1 className="text-[20vw] sm:text-[16vw] md:text-[20vw] lg:text-[23vw] [font-family:var(--font-metropolis-bold)] text-white leading-none tracking-tighter lowercase translate-y-[10%] md:translate-y-[28%] text-center md:text-left">
             dream
@@ -84,5 +97,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  );
+  )
 }

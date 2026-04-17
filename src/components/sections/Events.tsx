@@ -1,15 +1,22 @@
-const EVENTS = [
+import { sanityFetch } from '@/sanity/lib/live'
+
+const EVENTS_QUERY = `*[_type == "eventos" && _id == "eventos"][0]{ items }`
+
+const FALLBACK_EVENTS = [
   'Incentivo',
   'Convenções',
   'Lançamentos',
   'Premiações',
   'Ativações',
   'Estandes',
-];
+]
 
-export default function Eventos() {
+export default async function Eventos() {
+  const { data } = await sanityFetch({ query: EVENTS_QUERY })
+  const events: string[] = data?.items?.length ? data.items : FALLBACK_EVENTS
+
   // Duplicate for seamless loop
-  const items = [...EVENTS, ...EVENTS];
+  const items = [...events, ...events]
 
   return (
     <section className="bg-white py-11 overflow-hidden">
@@ -34,5 +41,5 @@ export default function Eventos() {
         </div>
       </div>
     </section>
-  );
+  )
 }

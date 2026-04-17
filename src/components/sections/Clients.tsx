@@ -1,15 +1,40 @@
-import Image from "next/image";
+import Image from 'next/image'
+import { sanityFetch } from '@/sanity/lib/live'
+import { urlFor } from '@/sanity/lib/image'
 
-const CLIENTS = [
-  { name: 'Facebook',  src: '/images/facebook.png',  width: 200, height: 50 },
-  { name: 'Banco PAN', src: '/images/pan.png',        width: 200, height: 50 },
-  { name: 'Chevrolet', src: '/images/chevrolet.png',  width: 200, height: 50 },
-  { name: 'Instagram', src: '/images/instagram.png',  width: 200, height: 50 },
-  { name: 'Safra',     src: '/images/safra.png',      width: 200, height: 50 },
-];
+const CLIENTS_QUERY = `*[_type == "client"] | order(orderRank asc){ _id, name, logo }`
 
-export default function Clients() {
-  const items = [...CLIENTS, ...CLIENTS];
+const FALLBACK_CLIENTS = [
+  { _id: 'fb',   name: 'Facebook',  src: '/images/facebook.png',  width: 200, height: 50 },
+  { _id: 'pan',  name: 'Banco PAN', src: '/images/pan.png',       width: 200, height: 50 },
+  { _id: 'chev', name: 'Chevrolet', src: '/images/chevrolet.png', width: 200, height: 50 },
+  { _id: 'ig',   name: 'Instagram', src: '/images/instagram.png', width: 200, height: 50 },
+  { _id: 'saf',  name: 'Safra',     src: '/images/safra.png',     width: 200, height: 50 },
+]
+
+interface ClientItem {
+  _id: string
+  name: string
+  src: string
+  width: number
+  height: number
+}
+
+export default async function Clients() {
+  const { data } = await sanityFetch({ query: CLIENTS_QUERY })
+
+  const clients: ClientItem[] =
+    data?.length
+      ? data.map((c: { _id: string; name: string; logo: object }) => ({
+          _id: c._id,
+          name: c.name,
+          src: urlFor(c.logo).width(400).fit('max').auto('format').url(),
+          width: 200,
+          height: 50,
+        }))
+      : FALLBACK_CLIENTS
+
+  const items = [...clients, ...clients]
 
   return (
     <section id="clientes" className="bg-white pt-0 pb-0 border-t border-white/5 scroll-mt-20">
@@ -19,17 +44,15 @@ export default function Clients() {
         </h2>
       </div>
 
-      <div className="relative overflow-hidden py-10 md:py-20">
+      <div className="relative overflow-x-hidden py-10 md:py-20">
         {/* Fade edges */}
         <div className="absolute left-0 top-5 bottom-0 w-12 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-5 bottom-0 w-12 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
-        <div
-          className="flex items-center marquee-fast"
-        >
+        <div className="flex items-center marquee-fast">
           {items.map((client, i) => (
             <div
-              key={i}
+              key={`${client._id}-${i}`}
               className="inline-flex items-center justify-center px-6 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0"
             >
               <Image
@@ -48,5 +71,5 @@ export default function Clients() {
         </div>
       </div>
     </section>
-  );
+  )
 }
