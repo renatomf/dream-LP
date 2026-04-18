@@ -1,20 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import ContactModal from './ContactModal';
 
 export default function ContactButtons() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setVisible(window.scrollY > 50); // aparece ao iniciar scroll
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // não mostra no admin
   if (pathname.startsWith('/admin')) return null;
 
   return (
     <>
       <ContactModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
 
-      <div className="fixed right-4 bottom-8 z-50 flex flex-col gap-3">
+      <div
+        className={`fixed right-4 bottom-8 z-50 flex flex-col gap-3 transition-all duration-500 ${
+          visible
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-6 pointer-events-none'
+        }`}
+      >
         {/* Chat button */}
         <button
           onClick={() => setModalOpen(true)}

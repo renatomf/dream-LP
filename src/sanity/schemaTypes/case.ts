@@ -1,12 +1,15 @@
 import { EqualIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
+import { CaseForm } from '../components/CaseForm'
 
 export default defineType({
   name: 'case',
   title: 'Case',
   type: 'document',
   icon: EqualIcon,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  components: { form: CaseForm } as any,
   fields: [
     orderRankField({ type: 'case' }),
     defineField({
@@ -18,26 +21,41 @@ export default defineType({
     defineField({
       name: 'title',
       title: 'Título',
-      type: 'string',
+      type: 'text',
+      rows: 3,
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'thumbnail',
+      title: 'Thumbnail',
+      type: 'image',
+      description: 'Imagem obrigatória exibida no card. Se o tipo de mídia for "Imagem", ela também será exibida no modal. Se for "Vídeo", serve apenas como capa antes do vídeo carregar.',
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'mediaType',
+      title: 'Tipo de mídia',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Vídeo (YouTube)', value: 'video' },
+          { title: 'Imagem', value: 'image' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'video',
     }),
     defineField({
       name: 'videoId',
       title: 'YouTube Video ID',
       type: 'string',
       description: 'Apenas o ID do vídeo (ex: c5rWB_fS5ao)',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'image',
-      title: 'Imagem de capa',
-      type: 'image',
-      description: 'Usada como thumbnail antes do vídeo carregar',
-      options: { hotspot: true },
+      hidden: ({ document }) => document?.mediaType !== 'video',
     }),
   ],
   orderings: [orderRankOrdering],
   preview: {
-    select: { title: 'title', subtitle: 'location', media: 'image' },
+    select: { title: 'title', subtitle: 'location', media: 'thumbnail' },
   },
 })

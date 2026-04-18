@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 export default function Statement() {
   return (
-    <section className="relative bg-white pt-10 pb-10 md:py-20">
-      <div className="relative z-10 max-w-6xl mx-auto px-8 flex items-center gap-20 md:gap-32">
-        
+    <section className="relative bg-white pt-14 pb-14 md:py-28">
+      <div className="relative z-10 max-w-360 mx-auto px-8 flex items-center gap-20 md:gap-32">
+
         {/* Text */}
         <div className="flex-1">
           <motion.h2
@@ -17,10 +17,10 @@ export default function Statement() {
               duration: 0.9,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="text-3xl md:text-4xl lg:text-5xl text-black leading-tight mb-10 tracking-normal"
+            className="text-2xl md:text-5xl lg:text-6xl text-black leading-tight mb-3 md:mb-8 tracking-tight"
             style={{ fontWeight: 300 }}
           >
-            Transformamos ideias em experiências que despertam todos os
+            Transformamos ideias <br className="hidden md:block"/> em experiências que despertam <br className="hidden md:block"/> todos os
             sentidos.
           </motion.h2>
 
@@ -33,7 +33,7 @@ export default function Statement() {
               delay: 0.1,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="text-xl text-black max-w-lg leading-relaxed ml-2"
+            className="text-sm md:text-xl text-black max-w-lg leading-relaxed  md:ml-2"
             style={{ fontWeight: 300 }}
           >
             Envolvemos e conectamos pessoas e marcas.
@@ -42,11 +42,11 @@ export default function Statement() {
 
         {/* Orange gradient orb */}
         <div
-          className="shrink-0 w-62 h-62 rounded-full pointer-events-none"
+          className="shrink-0 w-54 h-54 md:w-80 md:h-80 rounded-full pointer-events-none -translate-x-4 translate-y-8 md:translate-x-0 md:translate-y-0"
           style={{
             background:
               "linear-gradient(30deg, rgba(235, 30, 40, 1) 0%, rgba(242,116,33,0.8) 100%)",
-            filter: "blur(24px)",
+            filter: "blur(32px)",
           }}
         />
       </div>

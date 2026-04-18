@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -21,8 +21,18 @@ export default function TestimonialClient({
 }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const [paused, setPaused] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const current = testimonials[index];
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % testimonials.length);
+      setPlaying(true);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [paused, testimonials.length]);
 
   function postCommand(command: string) {
     iframeRef.current?.contentWindow?.postMessage(
@@ -32,10 +42,12 @@ export default function TestimonialClient({
   }
 
   function prev() {
+    setPaused(true);
     setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
     setPlaying(true);
   }
   function next() {
+    setPaused(true);
     setIndex((i) => (i + 1) % testimonials.length);
     setPlaying(true);
   }
@@ -54,8 +66,8 @@ export default function TestimonialClient({
   const hasVideo = current.mediaType === 'video' && Boolean(current.videoId);
 
   return (
-    <section className="bg-white overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2 min-h-120">
+    <section className="bg-white overflow-hidden  pt-8">
+      <div className="grid grid-cols-1 md:grid-cols-[46%_62%] min-h-120">
         {/* Left: Video or Image */}
         <div className="group relative min-h-60 md:min-h-0 md:h-full md:rounded-tr-3xl md:rounded-br-3xl overflow-hidden bg-zinc-900 self-stretch">
           <AnimatePresence mode="wait">
@@ -121,32 +133,11 @@ export default function TestimonialClient({
             </div>
           )}
 
-          {/* Mobile prev/next arrows — bottom right */}
-          <div className="md:hidden absolute bottom-3 right-3 flex items-center gap-2">
-            <button
-              onClick={prev}
-              className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-brand"
-              aria-label="Anterior"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M5 12l6-6M5 12l6 6" />
-              </svg>
-            </button>
-            <button
-              onClick={next}
-              className="w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-brand"
-              aria-label="Próximo"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M14 6l6 6-6 6" />
-              </svg>
-            </button>
-          </div>
         </div>
 
         {/* Right: Quote */}
         <div className="flex flex-col justify-start px-8 md:px-16 pt-0 pb-10 bg-white">
-          <div className="max-w-sm">
+          <div className="max-w-sm pt-6">
             {/* Giant orange quote mark */}
             <div className="text-[160px] md:text-[240px] text-brand font-bold leading-none mb-0 select-none" style={{ fontFamily: 'var(--font-space-grotesk)' }}>&ldquo;</div>
 

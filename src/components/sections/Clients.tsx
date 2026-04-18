@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
+import MarqueeTrack from '@/components/MarqueeTrack'
 
 const CLIENTS_QUERY = `*[_type == "client"] | order(orderRank asc){ _id, name, logo }`
 
@@ -38,18 +39,18 @@ export default async function Clients() {
 
   return (
     <section id="clientes" className="bg-white pt-0 pb-0 border-t border-white/5 scroll-mt-20">
-      <div className="max-w-6xl mx-auto px-8 -mb-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight caret-transparent">
+      <div className="max-w-360 mx-auto px-8 -mb-4">
+        <h2 className="text-3xl md:text-5xl font-bold text-black tracking-tight caret-transparent">
           Clientes<span className="text-brand">_</span>
         </h2>
       </div>
 
-      <div className="relative overflow-x-hidden py-10 md:py-20">
+      <div className="relative overflow-x-hidden py-20 md:py-20">
         {/* Fade edges */}
         <div className="absolute left-0 top-5 bottom-0 w-12 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-5 bottom-0 w-12 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
-        <div className="flex items-center marquee-fast">
+        <MarqueeTrack className="flex items-center">
           {items.map((client, i) => (
             <div
               key={`${client._id}-${i}`}
@@ -61,14 +62,14 @@ export default async function Clients() {
                 width={client.width}
                 height={client.height}
                 style={{
-                  width: `clamp(${client.width * 0.45}px, ${client.width * 0.08}vw + ${client.width * 0.3}px, ${client.width}px)`,
-                  height: `clamp(${client.height * 0.45}px, ${client.height * 0.08}vw + ${client.height * 0.3}px, ${client.height}px)`,
+                  width: `${client.width}px`,
+                  height: `${client.height}px`,
                   objectFit: 'contain',
                 }}
               />
             </div>
           ))}
-        </div>
+        </MarqueeTrack>
       </div>
     </section>
   )

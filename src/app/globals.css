@@ -3,7 +3,7 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ffffff;
-  --brand: #FF5500;
+  --brand: #FF6200;
   --brand-dark: #cc4400;
   --muted: #999999;
   --border: rgba(0, 0, 0, 0.1);
@@ -22,12 +22,20 @@
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 .marquee-fast {
-  animation: marquee 12s linear infinite;
+  animation: marquee 2s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  .marquee-fast {
+    animation: marquee 12s linear infinite;
+  }
 }
 
 
