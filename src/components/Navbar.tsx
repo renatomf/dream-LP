@@ -42,29 +42,17 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 py-6 transition-all duration-500 ${
-          scrolled ? "bg-black/90 backdrop-blur-md py-4 border-b border-white/5" : ""
+        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 py-4 transition-all duration-500 ${
+          scrolled ? "bg-black/90 backdrop-blur-md py-4" : ""
         }`}
       >
         <Link
           href="/"
-          className="text-white text-xl [font-family:var(--font-metropolis-bold)] tracking-wide lowercase flex items-end"
+          className="text-white text-4xl [font-family:var(--font-metropolis-semibold)] tracking-wide lowercase flex items-end"
         >
-          dream
-          <span className="ml-0.5 w-1 h-1 bg-[#FF5500] rounded-full inline-block mb-[0.3em]"></span>
+          <span className="opacity-30">dream</span>
+          <span className="ml-0.5 w-2 h-2 rounded-full inline-block mb-[0.26em]" style={{ background: 'linear-gradient(95deg, #C72026, #F27421)' }}></span>
         </Link>
-
-        {/* <div className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-white/60">
-          {navLinks.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="hover:text-white transition-colors"
-            >
-              {label}
-            </a>
-          ))}
-        </div> */}
 
         <button
           onClick={() => setIsDrawerOpen(true)}

@@ -17,6 +17,12 @@ const metropolisBold = localFont({
   display: "swap",
 });
 
+const metropolisSemiBold = localFont({
+  src: "../../public/fonts/metropolis.semi-bold.otf",
+  variable: "--font-metropolis-semibold",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Dream — Comunicação & Eventos",
   description:
@@ -35,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${spaceGrotesk.variable} ${metropolisBold.variable} antialiased`}>
+    <html lang="pt-BR" className={`${spaceGrotesk.variable} ${metropolisBold.variable} ${metropolisSemiBold.variable} antialiased`}>
       <body className="bg-background text-foreground min-h-screen overflow-x-hidden">
         <ScrollWatcher />
         <ContactButtons />

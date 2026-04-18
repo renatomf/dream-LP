@@ -8,7 +8,8 @@ export interface CaseItem {
   _id: string;
   title: string;
   location: string;
-  videoId: string;
+  mediaType?: string;
+  videoId?: string;
   thumbUrl?: string;
 }
 
@@ -75,11 +76,11 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
   return (
     <>
       <section id="cases" className="bg-white pt-4 pb-20 md:pt-0 md:pb-28 scroll-mt-20">
-        <div className="max-w-6xl mx-auto px-8">
+        <div className="max-w-360 mx-auto px-8">
 
           {/* Heading */}
           <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight caret-transparent">
+            <h2 className="text-3xl md:text-5xl font-bold text-black tracking-tight caret-transparent">
               Cases<span className="text-brand">_</span>
             </h2>
           </div>
@@ -99,7 +100,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl ${
                     span === 2 ? 'lg:col-span-2' : 'lg:col-span-1'
                   }`}
-                  style={{ height: 'clamp(330px, 50vw, 480px)' }}
+                  style={{ height: 'clamp(340px, 56vw, 580px)' }}
                 >
                   {/* Thumbnail */}
                   {c.thumbUrl && (
@@ -131,13 +132,15 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
 
                   {/* Text overlay + play icon */}
                   <div className="absolute bottom-0 left-0 right-0 p-8 z-10 bg-linear-to-t from-black/80 to-transparent">
-                    <div className="w-11 h-11 rounded-full bg-brand flex items-center justify-center mb-6">
-                      <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.12v15.76a1.5 1.5 0 0 0 2.3 1.28l13.5-7.88a1.5 1.5 0 0 0 0-2.56L6.3 2.84z" />
-                      </svg>
-                    </div>
-                    <div className="flex items-center max-w-[80%]" style={{ height: 'calc(3 * 1.5rem * 1.25)' }}>
-                      <h3 className="text-white font-bold text-2xl leading-tight line-clamp-3">{c.title}</h3>
+                    {c.mediaType !== 'image' && c.videoId && (
+                      <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center mb-3">
+                        <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.12v15.76a1.5 1.5 0 0 0 2.3 1.28l13.5-7.88a1.5 1.5 0 0 0 0-2.56L6.3 2.84z" />
+                        </svg>
+                      </div>
+                    )}
+                    <div className="flex items-center max-w-full" style={{ height: 'calc(3 * 1.5rem * 1.1)' }}>
+                      <h3 className="text-white font-bold text-xl md:text-2xl leading-tight line-clamp-3 md:whitespace-pre-line">{c.title}</h3>
                     </div>
                   </div>
                 </motion.button>
@@ -216,8 +219,8 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                         />
                       )}
 
-                      {/* Video iframe — cover-fills the active card */}
-                      {isActive && (
+                      {/* Video iframe or full image — active card only */}
+                      {isActive && c.mediaType !== 'image' && c.videoId && (
                         <iframe
                           ref={iframeRef}
                           key={c._id}
@@ -255,28 +258,30 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                       {/* Active: play/pause + title + nav */}
                       {isActive && (
                         <>
-                          {/* Play/Pause button — center */}
-                          <button
-                            onClick={(e) => { e.stopPropagation(); togglePlay(); }}
-                            className="absolute inset-0 z-20 flex items-center justify-center group"
-                            aria-label={isPlaying ? 'Pausar' : 'Reproduzir'}
-                          >
-                            <div className={`w-16 h-16 rounded-full border-2 border-white/70 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
-                              {isPlaying ? (
-                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                                </svg>
-                              ) : (
-                                <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M8 5v14l11-7z"/>
-                                </svg>
-                              )}
-                            </div>
-                          </button>
+                          {/* Play/Pause button — video only */}
+                          {c.mediaType !== 'image' && c.videoId && (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+                              className="absolute inset-0 z-20 flex items-center justify-center group"
+                              aria-label={isPlaying ? 'Pausar' : 'Reproduzir'}
+                            >
+                              <div className={`w-16 h-16 rounded-full border-2 border-white/70 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+                                {isPlaying ? (
+                                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                                  </svg>
+                                ) : (
+                                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                  </svg>
+                                )}
+                              </div>
+                            </button>
+                          )}
 
                           {/* Title bottom */}
                           <div className="absolute bottom-24 left-5 z-20">
-                            <h3 className="text-white font-bold text-xl mt-1">{c.title}</h3>
+                            <h3 className="text-white font-bold text-xl mt-1 whitespace-pre-line">{c.title}</h3>
                           </div>
 
                           {/* Navigation arrows */}
