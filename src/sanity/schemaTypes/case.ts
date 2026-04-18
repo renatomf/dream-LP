@@ -8,8 +8,7 @@ export default defineType({
   title: 'Case',
   type: 'document',
   icon: EqualIcon,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  components: { form: CaseForm } as any,
+  components: { input: CaseForm },
   fields: [
     orderRankField({ type: 'case' }),
     defineField({
@@ -45,6 +44,7 @@ export default defineType({
         layout: 'radio',
       },
       initialValue: 'video',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'videoId',
@@ -52,6 +52,13 @@ export default defineType({
       type: 'string',
       description: 'Apenas o ID do vídeo (ex: c5rWB_fS5ao)',
       hidden: ({ document }) => document?.mediaType !== 'video',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?.mediaType === 'video' && !value) {
+            return 'Obrigatório quando o tipo de mídia é Vídeo'
+          }
+          return true
+        }),
     }),
   ],
   orderings: [orderRankOrdering],

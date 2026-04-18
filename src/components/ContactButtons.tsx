@@ -23,6 +23,7 @@ export default function ContactButtons() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
