@@ -25,6 +25,7 @@ export default function TestimonialClient({
   const current = testimonials[index];
 
   useEffect(() => {
+    if (!testimonials.length) return;
     const timer = setInterval(() => {
       setIndex((i) => (i + 1) % testimonials.length);
       setPlaying(true);
