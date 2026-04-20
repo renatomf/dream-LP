@@ -2,6 +2,7 @@
 
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
+import {ptBRLocale} from '@sanity/locale-pt-br'
 
 import {dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
@@ -17,6 +18,7 @@ export default defineConfig({
   releases: {enabled: false},
   scheduledDrafts: {enabled: false},
   plugins: [
+    ptBRLocale(),
     structureTool({structure}),
   ],
 })

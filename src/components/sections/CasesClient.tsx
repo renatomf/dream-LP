@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Play } from 'lucide-react';
 
 export interface CaseItem {
   _id: string;
@@ -125,21 +126,24 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   {/* Country badge — top left */}
                   <div className="absolute top-8 left-8 z-10 flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0 mt-2" />
-                    <span className="text-white text-[12px] uppercase tracking-widest font-semibold mt-2">
+                    <span className="text-white text-[12px] uppercase tracking-[0.3em] font-semibold mt-2">
                       {c.location}
                     </span>
                   </div>
 
-                  {/* Text overlay + play icon */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 z-10 bg-linear-to-t from-black/80 to-transparent">
-                    {c.mediaType !== 'image' && c.videoId && (
-                      <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center mb-3">
-                        <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.12v15.76a1.5 1.5 0 0 0 2.3 1.28l13.5-7.88a1.5 1.5 0 0 0 0-2.56L6.3 2.84z" />
-                        </svg>
-                      </div>
-                    )}
-                    <div className="flex items-center max-w-full" style={{ height: 'calc(3 * 1.5rem * 1.1)' }}>
+                  {/* Bottom overlay — altura fixa, conteúdo flui do topo */}
+                  {/* pt-10 + h-12 + mb-5 + 3×text-2xl×leading-tight + pb-10 */}
+                  <div className="absolute bottom-0 left-0 right-0 z-10 bg-linear-to-t from-black/80 to-transparent flex flex-col px-10 pt-10 pb-10" style={{ height: 'calc(2.5rem + 3rem + 1.25rem + (3 * 1.5rem * 1.25) + 2.5rem)' }}>
+                    {/* Play button — posição fixa sempre */}
+                    <div className="h-12 mb-5 shrink-0">
+                      {c.mediaType !== 'image' && c.videoId && (
+                        <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center">
+                          <Play className="w-5 h-5 text-white fill-white ml-0.5" strokeWidth={0} />
+                        </div>
+                      )}
+                    </div>
+                    {/* Área fixa de 3 linhas — texto centralizado verticalmente */}
+                    <div className="flex items-center overflow-hidden shrink-0" style={{ height: 'calc(3 * 1.5rem * 1.25)' }}>
                       <h3 className="text-white font-bold text-xl md:text-2xl leading-tight line-clamp-3 md:whitespace-pre-line">{c.title}</h3>
                     </div>
                   </div>
