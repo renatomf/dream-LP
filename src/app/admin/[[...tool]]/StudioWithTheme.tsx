@@ -33,6 +33,27 @@ export function StudioWithTheme() {
   return (
     <>
       <style>{`
+        /* TextInput igual ao TextArea — mesma borda e fundo */
+        [data-ui="TextInput"] {
+          border-radius: 3px !important;
+          border: 1px solid #e5e5e5 !important;
+          background-color: #ffffff !important;
+        }
+        [data-ui="TextInput"] span[data-border] {
+          display: none !important;
+        }
+        [data-ui="TextInput"]:focus-within {
+          border-color: #ff6200 !important;
+        }
+        [data-ui="TextInput"] input {
+          caret-color: #000000 !important;
+          color: #000000 !important;
+        }
+
+        /* Caret visível apenas dentro de inputs de texto */
+        * { caret-color: transparent !important; }
+        input, textarea, [contenteditable="true"], [contenteditable=""] { caret-color: auto !important; }
+
         /* Todos os botões — bg transparente por padrão para evitar flicker */
         [data-ui="Button"]:not([data-testid="action-publish"]):not([data-testid="action-publicar"]):not([data-testid="action-unpublish"]):not([data-testid="action-despublicar"]):not([data-testid="confirm-button"]):not([data-testid="action-delete"]):not([data-testid="action-Delete"]):not([data-testid="document-header-Published-chip"]):not([data-testid="document-header-Publicado-chip"]):not([data-testid="document-header-Draft-chip"]):not([data-testid="document-header-Rascunho-chip"]):not(:has([data-sanity-icon="trash"])):not([data-pressed]):not([data-testid="add-multiple--primitive-button"]),
         [data-ui="MenuButton"]:not([data-testid="global-perspective-menu-button"]):not([data-pressed]),
@@ -60,6 +81,9 @@ export function StudioWithTheme() {
           outline: none !important;
         }
 
+        /* Campo de pesquisa de lista — desnecessário */
+        [data-ui="TextInput"]:has(input[aria-label="Pesquisar lista"]) { display: none !important; }
+
         /* Navbar */
         [data-testid="studio-navbar"] {
           --card-bg-color: #ffffff !important;
@@ -86,6 +110,64 @@ export function StudioWithTheme() {
           --card-avatar-green-fg-color: #3ab564 !important;
           --card-accent-fg-color: #ff6200 !important;
           --card-avatar-red-bg-color: #ff6200 !important;
+        }
+
+        /* Drag-over no campo de upload — bg laranja, fonte e ícone brancos */
+        [data-testid="image-input"] [data-hovered="true"],
+        [data-testid="image-input"] [data-drop-zone],
+        [data-ui="FileTarget"][data-hovered],
+        [data-dragging-over="true"],
+        [data-drop-zone][data-active="true"] {
+          --card-bg-color: #ff6200 !important;
+          --card-border-color: #ff6200 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          --card-muted-fg-color: #ffffff !important;
+          color: #ffffff !important;
+        }
+        [data-testid="image-input"] [data-hovered="true"] svg,
+        [data-testid="image-input"] [data-drop-zone] svg,
+        [data-ui="FileTarget"][data-hovered] svg,
+        [data-dragging-over="true"] svg,
+        [data-drop-zone][data-active="true"] svg {
+          color: #ffffff !important;
+          stroke: #ffffff !important;
+        }
+
+        /* Overlay de drag — texto, ícone e três pontos brancos */
+        [data-testid="upload-target-drop-message"],
+        [data-testid="upload-target-drop-message"] * {
+          color: #ffffff !important;
+        }
+        [data-testid="upload-target-drop-message"] svg {
+          stroke: #ffffff !important;
+        }
+        /* Três pontos (field actions) visíveis sobre o overlay */
+        [data-ui="Layer"] ~ * [data-testid="field-actions-trigger"],
+        [data-ui="Layer"] [data-testid="field-actions-trigger"],
+        body:has([data-testid="upload-target-drop-message"]) [data-testid="field-actions-trigger"] {
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          color: #ffffff !important;
+        }
+
+        /* Filename code block (ex: pan.png) — texto branco, bg transparente */
+        [data-ui="Code"],
+        [data-ui="Code"][class],
+        pre[data-ui="Code"],
+        [data-ui="Text"] pre[data-ui="Code"] {
+          background: #ff6200 !important;
+          background-color: #ff6200 !important;
+          --card-bg-color: #ff6200 !important;
+          color: #ffffff !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        [data-ui="Code"] code,
+        pre[data-ui="Code"] code {
+          background: #ff6200 !important;
+          background-color: #ff6200 !important;
+          color: #ffffff !important;
         }
 
         /* Drag handle cursor */
@@ -147,11 +229,21 @@ export function StudioWithTheme() {
         [data-testid="action-delete"]:hover,
         [data-testid="action-Delete"]:hover,
         [data-testid="action-Excluir"]:hover,
-        [data-testid="action-unpublish"]:hover,
-        [data-testid="action-despublicar"]:hover,
         [data-testid="pane-context-menu-delete"]:hover,
         [role="menuitem"]:has([data-sanity-icon="trash"]):hover {
           --card-bg-color: #d42e20 !important;
+          --card-border-color: #d42e20 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          --card-muted-fg-color: #ffffff !important;
+          outline: none !important;
+        }
+        [data-testid="action-unpublish"]:hover,
+        [data-testid="action-despublicar"]:hover {
+          --card-bg-color: #d42e20 !important;
+          --card-border-color: #d42e20 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
           outline: none !important;
         }
 
@@ -207,6 +299,36 @@ export function StudioWithTheme() {
           --card-badge-caution-icon-color: #ffffff !important;
         }
 
+        /* Preview status chip — Rascunho/caution */
+        [data-testid="default-preview__status"] [data-tone="caution"] {
+          background-color: #fbd024 !important;
+          --card-bg-color: #fbd024 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          --card-badge-caution-icon-color: #ffffff !important;
+          color: #ffffff !important;
+          border-radius: 9999px !important;
+          padding: 2px 6px !important;
+        }
+        [data-testid="default-preview__status"] [data-tone="caution"] svg,
+        [data-testid="default-preview__status"] [data-tone="caution"] circle {
+          color: #ffffff !important;
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
+        }
+
+        /* Preview status chip — Publicado */
+        [data-testid="default-preview__status"] [data-tone="positive"] {
+          background-color: #43d675 !important;
+          --card-bg-color: #43d675 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          --card-badge-positive-icon-color: #ffffff !important;
+          color: #ffffff !important;
+          border-radius: 9999px !important;
+          padding: 2px 6px !important;
+        }
+
         /* Published chip */
         [data-testid="document-header-Published-chip"],
         [data-testid="document-header-Publicado-chip"] {
@@ -232,6 +354,23 @@ export function StudioWithTheme() {
           --card-fg-color: #ffffff !important;
           --card-icon-color: #ffffff !important;
           --card-badge-caution-icon-color: #ffffff !important;
+          outline: none !important;
+        }
+
+        /* Event delete button — caution bg, texto branco no hover */
+        [data-testid="action-Excluir"][data-tone="caution"],
+        [data-testid="action-delete"][data-tone="caution"] {
+          --card-bg-color: #fbd024 !important;
+          --card-border-color: #fbd024 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+        }
+        [data-testid="action-Excluir"][data-tone="caution"]:hover,
+        [data-testid="action-delete"][data-tone="caution"]:hover {
+          --card-bg-color: #e6bc00 !important;
+          --card-border-color: #e6bc00 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
           outline: none !important;
         }
 

@@ -21,18 +21,16 @@ export default function TestimonialClient({
 }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [paused, setPaused] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const current = testimonials[index];
 
   useEffect(() => {
-    if (paused) return;
     const timer = setInterval(() => {
       setIndex((i) => (i + 1) % testimonials.length);
       setPlaying(true);
     }, 5000);
     return () => clearInterval(timer);
-  }, [paused, testimonials.length]);
+  }, [testimonials.length]);
 
   function postCommand(command: string) {
     iframeRef.current?.contentWindow?.postMessage(
@@ -42,12 +40,10 @@ export default function TestimonialClient({
   }
 
   function prev() {
-    setPaused(true);
     setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
     setPlaying(true);
   }
   function next() {
-    setPaused(true);
     setIndex((i) => (i + 1) % testimonials.length);
     setPlaying(true);
   }
