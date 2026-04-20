@@ -46,7 +46,11 @@
 
 * {
   box-sizing: border-box;
-  caret-color: transparent;
+  caret-color: auto;
+}
+
+input, textarea, [contenteditable] {
+  caret-color: auto;
 }
 
 html {
