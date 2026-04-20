@@ -1,10 +1,12 @@
 import { defineField, defineType } from 'sanity'
+import { CommentIcon } from '@sanity/icons'
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'testimonial',
   title: 'Depoimento',
   type: 'document',
+  icon: CommentIcon,
   fields: [
     orderRankField({ type: 'testimonial' }),
     defineField({

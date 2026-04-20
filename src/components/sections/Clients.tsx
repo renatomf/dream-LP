@@ -35,7 +35,9 @@ export default async function Clients() {
         }))
       : FALLBACK_CLIENTS
 
-  const items = [...clients, ...clients]
+  const MIN_SLOTS = 8
+  const repeat = Math.ceil((MIN_SLOTS * 2) / clients.length)
+  const items = Array.from({ length: repeat }, () => clients).flat()
 
   return (
     <section id="clientes" className="bg-white pt-0 pb-0 border-t border-white/5 scroll-mt-20">
