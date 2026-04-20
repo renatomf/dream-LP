@@ -1,6 +1,6 @@
 'use client'
 
-import {defineConfig} from 'sanity'
+import {defineConfig, type DocumentActionComponent, type SanityDefinedAction} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
 
@@ -29,12 +29,12 @@ export default defineConfig({
           .map((action) => {
             if (action.action !== 'delete') return action
             // Delete com tom caution (amarelo) para eventos
-            const CautionDelete = (props: Parameters<typeof action>[0]) => {
+            const CautionDelete: DocumentActionComponent = (props) => {
               const result = action(props)
               if (!result) return result
               return { ...result, tone: 'caution' }
             }
-            CautionDelete.action = 'delete'
+            CautionDelete.action = 'delete' as SanityDefinedAction
             return CautionDelete
           })
       }
