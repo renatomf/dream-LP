@@ -6,7 +6,7 @@ import type { NavbarProps } from 'sanity'
 
 export function CustomNavbar(props: NavbarProps) {
   const user = useCurrentUser()
-  const isAdmin = user?.roles.some(r => r.name === 'administrator')
+  const isAdmin = user?.roles.some(r => r.name === 'administrator') ?? false
 
   useEffect(() => {
     const preventFileDrop = (e: DragEvent) => {
@@ -21,8 +21,6 @@ export function CustomNavbar(props: NavbarProps) {
   }, [])
 
   useEffect(() => {
-    if (isAdmin === undefined) return
-
     const styleId = 'hide-workspace-menu'
     const existing = document.getElementById(styleId)
 
