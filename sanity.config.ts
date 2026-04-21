@@ -3,6 +3,7 @@
 import {defineConfig, type DocumentActionComponent} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
+import {media} from 'sanity-plugin-media'
 
 import {dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
@@ -51,5 +52,6 @@ export default defineConfig({
   plugins: [
     ptBRLocale(),
     structureTool({structure}),
+    media(),
   ],
 })
