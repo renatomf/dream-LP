@@ -1,34 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
 
-import {type ComponentProps, useEffect, useState} from 'react'
 import {NextStudio} from 'next-sanity/studio'
 import baseConfig from '../../../../sanity.config'
 
-const THEMER_PARAMS = new URLSearchParams({
-  preset:      'stereofidelic',
-  default:     '000000;lightest:ffffff;darkest:000000',
-  primary:     'ff6200;lightest:ff6200',
-  transparent: 'dedede;lightest:ededed;darkest:050505',
-  positive:    '43d675;400;lightest:43d675',
-  caution:     'fbd024;300;lightest:fbd024',
-  critical:    'f03e2f;lightest:f02f35',
-  darkest:     'ffffff',
-}).toString().replaceAll('%3A', ':').replaceAll('%3B', ';')
-
-const THEMER_URL = `https://themer.sanity.build/api/hues?${THEMER_PARAMS}`
-
-type StudioConfig = ComponentProps<typeof NextStudio>['config']
-
 export function StudioWithTheme() {
-  const [config, setConfig] = useState<StudioConfig>(baseConfig)
-
-  useEffect(() => {
-    // @ts-ignore -- dynamic URL import has no type declarations
-    import(/* webpackIgnore: true */ THEMER_URL).then(({theme}) => {
-      setConfig({...baseConfig, theme} as StudioConfig)
-    })
-  }, [])
 
   return (
     <>
@@ -168,6 +143,28 @@ export function StudioWithTheme() {
           background: #ff6200 !important;
           background-color: #ff6200 !important;
           color: #ffffff !important;
+        }
+
+        /* Upload button — borda laranja */
+        [data-testid="image-input"] [data-ui="Button"],
+        [data-testid="file-input"] [data-ui="Button"],
+        [data-testid="upload-button"],
+        [data-testid="file-input-upload-button"],
+        [data-testid="image-input-upload-button"] {
+          --card-border-color: #ff6200 !important;
+          border-color: #ff6200 !important;
+          --card-fg-color: #ff6200 !important;
+          --card-icon-color: #ff6200 !important;
+        }
+        [data-testid="image-input"] [data-ui="Button"]:hover,
+        [data-testid="file-input"] [data-ui="Button"]:hover,
+        [data-testid="upload-button"]:hover,
+        [data-testid="file-input-upload-button"]:hover,
+        [data-testid="image-input-upload-button"]:hover {
+          --card-border-color: #e05500 !important;
+          border-color: #e05500 !important;
+          --card-fg-color: #e05500 !important;
+          --card-icon-color: #e05500 !important;
         }
 
         /* Drag handle cursor */
@@ -375,7 +372,7 @@ export function StudioWithTheme() {
         }
 
         /* Progress ring inside buttons — orange stroke on hover */
-        [data-ui="Button"]:hover circle[stroke="#b087f7"] {
+        [data-ui="Button"]:hover circle[stroke="#ff6200"] {
           stroke: #ff6200 !important;
         }
 
@@ -394,9 +391,20 @@ export function StudioWithTheme() {
           --card-muted-fg-color: #000000 !important;
         }
 
+        /* Active/selected sidebar item */
+        [aria-selected="true"],
+        [data-selected="true"],
+        [data-selected=""],
+        [data-selected] {
+          --card-bg-color: #ff6200 !important;
+          --card-border-color: #ff6200 !important;
+          --card-fg-color: #ffffff !important;
+          --card-icon-color: #ffffff !important;
+          --card-muted-fg-color: #000000 !important;
+        }
 
       `}</style>
-      <NextStudio config={config} scheme="light" />
+      <NextStudio config={baseConfig} scheme="light" />
     </>
   )
 }
