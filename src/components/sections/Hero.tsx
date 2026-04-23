@@ -22,7 +22,7 @@ export default async function Hero() {
   const imageUrl = hero?.image ? urlFor(hero.image).url() : null
 
   return (
-    <section id="hero" className="relative h-[87vh] md:h-[83vh] overflow-hidden bg-black">
+    <section id="hero" className="relative h-[75vh] md:h-[83vh] overflow-hidden bg-black">
       {/* Top stroke */}
       <div className="absolute top-0 left-0 right-0 h-0.75 z-30" style={{ background: 'linear-gradient(to right, #C72026, #F27421)' }} />
       {/* Fallback gradient shown behind the media */}
