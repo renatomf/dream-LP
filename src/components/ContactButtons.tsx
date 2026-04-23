@@ -48,7 +48,7 @@ export default function ContactButtons() {
         <button
           onClick={() => setModalOpen(true)}
           aria-label="Fale conosco"
-          className="w-11 h-11 rounded-full bg-[#e85d04] flex items-center justify-center shadow-lg hover:bg-[#cf4f02] transition-colors"
+          className="w-11 h-11 rounded-full bg-[#ff6200] flex items-center justify-center shadow-lg hover:scale-110 transition-transform cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ export default function ContactButtons() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
-          className="w-11 h-11 rounded-full bg-[#25d366] flex items-center justify-center shadow-lg hover:bg-[#1ebe5d] transition-colors"
+          className="w-11 h-11 rounded-full bg-[#25d366] flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

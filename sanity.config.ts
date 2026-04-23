@@ -1,9 +1,7 @@
-'use client'
-
 import {defineConfig, type DocumentActionComponent} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
-import {media} from 'sanity-plugin-media'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
 
 import {dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
@@ -17,6 +15,13 @@ export default defineConfig({
   projectId,
   dataset,
   schema,
+  tools: (prev, {currentUser}) => {
+    const isEditor = currentUser?.roles?.some((r) => r.name === 'editor')
+    if (isEditor) {
+      return prev.filter((tool) => tool.name !== 'media')
+    }
+    return prev
+  },
   document: {
     newDocumentOptions: (prev) =>
       prev.filter((item) => item.templateId !== 'about' && item.templateId !== 'hero'),
@@ -42,8 +47,17 @@ export default defineConfig({
       return prev
     },
   },
+  form: {
+    image: {
+      assetSources: (prev) => prev.filter((s) => s !== mediaAssetSource),
+    },
+    file: {
+      assetSources: (prev) => prev.filter((s) => s !== mediaAssetSource),
+    },
+  },
   releases: {enabled: false},
   scheduledDrafts: {enabled: false},
+  scheduledPublishing: {enabled: false},
   studio: {
     components: {
       navbar: CustomNavbar,

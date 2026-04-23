@@ -26,7 +26,7 @@ export default function VideoSection() {
 
   return (
     <section className="relative bg-white pt-0 pb-6 overflow-hidden">
-      <div className="w-full md:w-[95%] max-w-445 mx-auto">
+      <div className="w-full md:w-[92%] max-w-445 mx-auto">
       <div
         className="group rounded-none md:rounded-2xl overflow-hidden relative h-64 md:h-207.5"
       >

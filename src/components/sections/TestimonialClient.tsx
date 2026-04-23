@@ -175,7 +175,7 @@ export default function TestimonialClient({
           <div className="flex items-center gap-3 mt-12">
             <button
               onClick={prev}
-              className="w-11 h-11 rounded-full border-2 border-brand bg-transparent flex items-center justify-center text-brand hover:bg-brand/10 transition-all duration-200"
+              className="w-11 h-11 rounded-full border-2 border-brand bg-transparent flex items-center justify-center text-brand cursor-pointer hover:bg-brand hover:text-white hover:border-brand transition-colors"
               aria-label="Anterior"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -184,7 +184,7 @@ export default function TestimonialClient({
             </button>
             <button
               onClick={next}
-              className="w-11 h-11 rounded-full border-2 border-brand bg-transparent flex items-center justify-center text-brand hover:bg-brand/10 transition-all duration-200"
+              className="w-11 h-11 rounded-full border-2 border-brand bg-transparent flex items-center justify-center text-brand cursor-pointer hover:bg-brand hover:text-white hover:border-brand transition-colors"
               aria-label="Próximo"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

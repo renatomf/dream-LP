@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
+import HeroText from './HeroText'
+import HeroMediaFade from './HeroMedia'
 
 const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 
@@ -48,6 +50,9 @@ export default async function Hero() {
         </div>
       )}
 
+      {/* Fade-in reveal */}
+      <HeroMediaFade />
+
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20" />
 
@@ -85,22 +90,7 @@ export default async function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-between px-0 md:px-16 pb-0 pt-32">
-        <div />
-
-        <div className="flex flex-col md:flex-row md:items-end md:justify-start gap-6 md:gap-4 select-none">
-          <h1 className="w-[120vw] -ml-[11vw] -mr-[6vw] md:mx-0 md:w-auto text-[37vw] md:text-[20vw] lg:text-[26vw] [font-family:var(--font-metropolis-semibold)] text-white leading-none tracking-tighter lowercase translate-y-[28%] text-center md:text-left md:-translate-x-[3vw]">
-            dream
-          </h1>
-
-          <div className="hidden md:block text-left pb-[10%] md:pb-[5%]">
-            <p className="text-[6vw] sm:text-[4vw] md:text-[2vw] lg:text-[1.4vw] text-white tracking-wide leading-normal font-light opacity-30">
-              Comunicação
-              <br />e Eventos
-            </p>
-          </div>
-        </div>
-      </div>
+      <HeroText />
     </section>
   )
 }
