@@ -56,7 +56,7 @@ export default async function Clients() {
           {items.map((client, i) => (
             <div
               key={`${client._id}-${i}`}
-              className="inline-flex items-center justify-center px-6 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0"
+              className="inline-flex items-center justify-center px-6 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0 cursor-pointer"
             >
               <Image
                 src={client.src}

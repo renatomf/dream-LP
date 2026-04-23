@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const LinkedinIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -42,7 +43,7 @@ export default function Footer() {
             <a
               key={i}
               href="#"
-              className="w-8 h-8 rounded-full bg-[#FF5C00] flex items-center justify-center hover:bg-[#FF5C00]/80 transition-colors"
+              className="w-8 h-8 rounded-full bg-[#FF5C00] hover:scale-110 transition-transform flex items-center justify-center"
             >
               <Icon />
             </a>
@@ -75,7 +76,7 @@ export default function Footer() {
               Av. Dr. Chucri Zaidan, 1550<br />
               Cj. 1601 · São paulo · Brasil
             </p>
-            <a href="#" className="text-sm text-white/50 hover:text-white transition-colors mt-1 inline-block">
+            <a href="https://www.google.com/maps/search/?api=1&query=Av.+Dr.+Chucri+Zaidan,+1550,+São+Paulo,+SP,+Brasil" target="_blank" rel="noopener noreferrer" className="text-sm text-white/50 hover:text-white transition-colors mt-1 inline-block">
               (ver mapa)
             </a>
           </div>
@@ -85,7 +86,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10 h-24 flex items-center justify-center px-4 md:px-8">
         <p className="text-xs text-white/30 text-center">
-          Política de privacidade e cookies. Copyright 2026. Dream Eventos. Todos os direitos reservados.
+          <Link href="/politica" className="hover:text-white transition-colors cursor-pointer">Política de privacidade e cookies.</Link> Copyright 2026. Dream Eventos. Todos os direitos reservados.
         </p>
       </div>
     </footer>

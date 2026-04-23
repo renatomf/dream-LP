@@ -98,10 +98,9 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
                   onClick={() => openModal(c)}
-                  className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl ${
+                  className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer h-88 md:h-[clamp(420px,68vw,590px)] ${
                     span === 2 ? 'lg:col-span-2' : 'lg:col-span-1'
                   }`}
-                  style={{ height: 'clamp(340px, 56vw, 580px)' }}
                 >
                   {/* Thumbnail */}
                   {c.thumbUrl && (
@@ -114,7 +113,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                         : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
                       priority={i === 0}
                       loading={i === 0 ? 'eager' : 'lazy'}
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover duration-700 group-hover:scale-105"
                     />
                   )}
                   {/* Gradient tint */}
@@ -123,29 +122,37 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300" />
 
-                  {/* Country badge — top left */}
-                  <div className="absolute top-8 left-8 z-10 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0 mt-2" />
-                    <span className="text-white text-[12px] uppercase tracking-[0.3em] font-semibold mt-2">
-                      {c.location}
-                    </span>
-                  </div>
+                  {/* Gradient bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-2/3 z-10 bg-linear-to-t from-black/80 to-transparent pointer-events-none" />
 
-                  {/* Bottom overlay — altura fixa, conteúdo flui do topo */}
-                  {/* pt-10 + h-12 + mb-5 + 3×text-2xl×leading-tight + pb-10 */}
-                  <div className="absolute bottom-0 left-0 right-0 z-10 bg-linear-to-t from-black/80 to-transparent flex flex-col px-10 pt-10 pb-10" style={{ height: 'calc(2.5rem + 3rem + 1.25rem + (3 * 1.5rem * 1.25) + 2.5rem)' }}>
-                    {/* Play button — posição fixa sempre */}
-                    <div className="h-12 mb-5 shrink-0">
-                      {c.mediaType !== 'image' && c.videoId && (
-                        <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center">
-                          <Play className="w-5 h-5 text-white fill-white ml-0.5" strokeWidth={0} />
-                        </div>
-                      )}
+                  {/* Container principal */}
+                  <div className="absolute inset-6 sm:inset-8 z-20 flex flex-col justify-between">
+
+                    {/* Topo — badge */}
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0" />
+                      <span className="text-white text-[12px] uppercase tracking-[0.3em] font-semibold">
+                        {c.location}
+                      </span>
                     </div>
-                    {/* Área fixa de 3 linhas — texto centralizado verticalmente */}
-                    <div className="flex items-center overflow-hidden shrink-0" style={{ height: 'calc(3 * 1.5rem * 1.25)' }}>
-                      <h3 className="text-white font-bold text-xl md:text-2xl leading-tight line-clamp-3 md:whitespace-pre-line">{c.title}</h3>
+
+                    {/* Fundo — play fixo no topo, título fixo no fundo */}
+                    <div className="relative h-31.5 sm:h-35.75 md:h-39.75">
+                      {/* Play button — sempre fixo */}
+                      <div className="absolute -top-2 sm:-top-3 left-0">
+                        {c.mediaType !== 'image' && c.videoId && (
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand flex items-center justify-center">
+                            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white ml-0.5" strokeWidth={0} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Título — sempre inicia abaixo do play */}
+                      <div className="absolute top-14 sm:top-16 left-0 right-0 bottom-0 overflow-hidden">
+                        <h3 className="text-white font-bold text-lg sm:text-xl md:text-2xl leading-snug whitespace-pre-line">{c.title}</h3>
+                      </div>
                     </div>
+
                   </div>
                 </motion.button>
               );
@@ -157,8 +164,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
             <div className="flex justify-center mt-12">
               <button
                 onClick={() => setVisibleCount((n) => Math.min(n + 10, cases.length))}
-                className="border rounded-full px-8 py-3 text-sm tracking-widest transition-all duration-300 font-semibold"
-                style={{ borderColor: 'var(--brand)', color: 'var(--brand)' }}
+                className="border border-brand text-brand rounded-full px-8 py-3 text-sm tracking-widest font-semibold cursor-pointer hover:bg-brand hover:text-white transition-colors"
               >
                 Carregar mais
               </button>

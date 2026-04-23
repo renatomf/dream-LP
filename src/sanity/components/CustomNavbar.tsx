@@ -41,7 +41,7 @@ const HIDE_CSS = `
 
 export function CustomNavbar(props: NavbarProps) {
   const user = useCurrentUser()
-  const isAdmin = !user || user.roles.some(r => r.name === 'administrator')
+  const isAdmin = user?.roles.some(r => r.name === 'administrator') ?? false
 
   useEffect(() => {
     const preventFileDrop = (e: DragEvent) => {

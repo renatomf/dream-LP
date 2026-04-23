@@ -3,15 +3,25 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function Navbar() {
+interface NavbarProps {
+  onNavigate?: (href: string) => void;
+}
+
+export default function Navbar({ onNavigate }: NavbarProps = {}) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const hero = document.getElementById("hero");
-    if (!hero) return;
+    if (!hero) {
+      setScrolled(true);
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => setScrolled(!entry.isIntersecting),
       { threshold: 0 }
@@ -28,8 +38,14 @@ export default function Navbar() {
   }, [isDrawerOpen]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     setIsDrawerOpen(false);
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (onNavigate) {
+      onNavigate("/");
+    } else {
+      window.location.href = "/";
+    }
   };
 
   const navLinks = [
@@ -37,18 +53,21 @@ export default function Navbar() {
     { href: "#clientes", label: "Clientes" },
     { href: "#sobre", label: "Sobre nós" },
     { href: "#conversar", label: "Vamos conversar" },
-  ];
+  ].map((link) => ({
+    ...link,
+    href: isHome ? link.href : `/${link.href}`,
+  }));
 
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 py-4 transition-all duration-500 ${
-          scrolled ? "bg-black/90 backdrop-blur-md py-4" : ""
+        className={`fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-8 md:px-16 h-14 transition-all duration-500 ${
+          scrolled ? "bg-black/90 backdrop-blur-md" : ""
         }`}
       >
         <Link
           href="/"
-          className="text-white text-4xl [font-family:var(--font-metropolis-semibold)] tracking-wide lowercase flex items-end"
+          className="text-white text-4xl [font-family:var(--font-metropolis-semibold)] tracking-wide lowercase flex items-end cursor-pointer select-none"
         >
           <span className="opacity-30">dream</span>
           <span className="ml-0.5 w-2 h-2 rounded-full inline-block mb-[0.26em]" style={{ background: 'linear-gradient(95deg, #C72026, #F27421)' }}></span>
@@ -94,7 +113,7 @@ export default function Navbar() {
             className="fixed top-0 right-0 h-full w-full md:w-72 z-120 bg-[#0a0a0a] md:border-l md:border-white/3 flex flex-col px-8 py-8"
           >
             <div className="flex items-center justify-between mb-12">
-              <span className="text-red-700 text-sm uppercase tracking-widest font-light">
+              <span className="text-[#FF2A35] text-sm uppercase tracking-widest font-light">
                 Menu
               </span>
               <button
@@ -116,9 +135,15 @@ export default function Navbar() {
               {navLinks.map(({ href, label }) => (
                 <a
                   key={href}
-                  href={href}
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="text-white/50 hover:text-white text-2xl font-light tracking-wide transition-colors"
+                  href={onNavigate ? undefined : href}
+                  onClick={(e) => {
+                    setIsDrawerOpen(false);
+                    if (onNavigate) {
+                      e.preventDefault();
+                      onNavigate(href);
+                    }
+                  }}
+                  className="text-white/50 hover:text-white text-2xl font-light tracking-wide transition-colors cursor-pointer"
                 >
                   {label}
                 </a>
@@ -131,7 +156,7 @@ export default function Navbar() {
                 <Link
                   href="#"
                   aria-label="LinkedIn"
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-red-700 hover:scale-110 transition-transform"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-[#FF2A35] hover:scale-110 transition-transform"
                 >
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
                     <path d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5S1 4.6 1 3.5 1.9 1.5 3 1.5s1.98.9 1.98 2zM1 8h4v14H1zM8 8h3.6v1.9h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V22h-4v-6.7c0-1.6 0-3.7-2.3-3.7s-2.6 1.8-2.6 3.6V22H8z" />
@@ -142,7 +167,7 @@ export default function Navbar() {
                 <Link
                   href="#"
                   aria-label="Instagram"
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-red-700 hover:scale-110 transition-transform"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-[#FF2A35] hover:scale-110 transition-transform"
                 >
                   <svg
                     width="24"
@@ -162,7 +187,7 @@ export default function Navbar() {
                 <Link
                   href="#"
                   aria-label="Facebook"
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-red-700 hover:scale-110 transition-transform"
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-[#FF2A35] hover:scale-110 transition-transform"
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                     <path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2c0-.6.4-1 1-1z" />

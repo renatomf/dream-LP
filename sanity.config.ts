@@ -18,7 +18,7 @@ export default defineConfig({
   tools: (prev, {currentUser}) => {
     const isEditor = currentUser?.roles?.some((r) => r.name === 'editor')
     if (isEditor) {
-      return prev.filter((tool) => tool.name !== 'sanity/structure' && tool.name !== 'media')
+      return prev.filter((tool) => tool.name !== 'media')
     }
     return prev
   },
@@ -57,6 +57,7 @@ export default defineConfig({
   },
   releases: {enabled: false},
   scheduledDrafts: {enabled: false},
+  scheduledPublishing: {enabled: false},
   studio: {
     components: {
       navbar: CustomNavbar,

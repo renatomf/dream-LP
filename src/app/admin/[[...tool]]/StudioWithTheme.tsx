@@ -371,6 +371,14 @@ export function StudioWithTheme() {
           outline: none !important;
         }
 
+        /* Spinner — laranja */
+        [data-ui="Spinner"] {
+          color: #ff6200 !important;
+        }
+        [data-sanity-icon="spinner"] path {
+          stroke: #ff6200 !important;
+        }
+
         /* Progress ring inside buttons — orange stroke on hover */
         [data-ui="Button"]:hover circle[stroke="#ff6200"] {
           stroke: #ff6200 !important;
