@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-const VIDEO_ID = '0qquYVjZ5-g';
+const VIDEO_ID = '9wxD6q2PMaw';
 
 export default function VideoSection() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
