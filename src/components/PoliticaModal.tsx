@@ -2,20 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowUp } from "lucide-react";
+import { X } from "lucide-react";
 
 export default function PoliticaModal() {
   const [open, setOpen] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
   useEffect(() => {
     if (!open) return;
     const container = document.getElementById("politica-scroll");
     if (!container) return;
     container.scrollTop = 0;
-    const onScroll = () => setShowScrollTop(container.scrollTop > 300);
-    container.addEventListener("scroll", onScroll);
-    return () => container.removeEventListener("scroll", onScroll);
   }, [open]);
 
   useEffect(() => {
@@ -23,9 +18,13 @@ export default function PoliticaModal() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const scrollToTop = () => {
-    document.getElementById("politica-scroll")?.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  useEffect(() => {
+    if (!open) return;
+    const handleHashChange = () => setOpen(false);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [open]);
+
 
   return (
     <>
@@ -141,23 +140,6 @@ export default function PoliticaModal() {
               </article>
             </div>
 
-            {/* Scroll to top */}
-            <AnimatePresence>
-              {showScrollTop && (
-                <motion.button
-                  key="scroll-top"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.25 }}
-                  onClick={scrollToTop}
-                  className="fixed bottom-8 right-8 z-210 w-12 h-12 rounded-full bg-black flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform"
-                  aria-label="Voltar ao topo"
-                >
-                  <ArrowUp size={20} strokeWidth={1.5} />
-                </motion.button>
-              )}
-            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>

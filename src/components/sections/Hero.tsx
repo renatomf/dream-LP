@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
-import HeroText from './HeroText'
-import HeroMediaFade from './HeroMedia'
+import HeroText from '../HeroText'
+import HeroMediaFade from '../HeroMedia'
 
 const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 

@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 export default function Statement() {
   return (
-    <section className="relative bg-white pt-14 pb-14 md:py-28">
-      <div className="relative z-10 max-w-360 mx-auto px-8 flex items-center gap-20 md:gap-32">
+    <section className="relative bg-white pt-4 pb-14 md:pt-14 md:pb-28 overflow-hidden md:overflow-visible">
+      <div className="relative z-10 max-w-360 mx-auto px-8 flex items-center gap-6 md:gap-32">
 
         {/* Text */}
         <div className="flex-1">
@@ -42,7 +42,7 @@ export default function Statement() {
 
         {/* Orange gradient orb */}
         <div
-          className="shrink-0 w-54 h-54 md:w-80 md:h-80 rounded-full pointer-events-none -translate-x-4 translate-y-8 md:translate-x-0 md:translate-y-0"
+          className="shrink-0 w-54 h-54 md:w-80 md:h-80 rounded-full pointer-events-none translate-x-16 translate-y-8 md:translate-x-0 md:translate-y-0"
           style={{
             background:
               "linear-gradient(30deg, rgba(235, 30, 40, 1) 0%, rgba(242,116,33,0.8) 100%)",

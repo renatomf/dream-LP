@@ -47,10 +47,29 @@
 * {
   box-sizing: border-box;
   caret-color: auto;
+  cursor: default !important;
+  user-select: text;
 }
 
-input, textarea, [contenteditable] {
+input, textarea, select, [contenteditable],
+input *, textarea *, select *, [contenteditable] * {
+  cursor: text !important;
+}
+
+a, button, [role="button"],
+a *, button *, [role="button"] * {
+  cursor: pointer !important;
+  caret-color: transparent;
+}
+
+input, textarea, select, [contenteditable] {
   caret-color: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  cursor: default !important;
+  user-select: text;
+  caret-color: transparent;
 }
 
 input:-webkit-autofill,
@@ -78,8 +97,8 @@ body {
 }
 
 ::selection {
-  background: var(--brand);
-  color: white;
+  background: rgba(255, 98, 0, 0.15);
+  color: inherit;
 }
 
 ::-webkit-scrollbar {

@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="background:#0a0a0a;border-top:1px solid #1a1a1a;padding:24px 40px;text-align:center;">
                     <p style="margin:0 0 4px;font-size:10px;color:#FF2A35;letter-spacing:3px;text-transform:uppercase;">dream</p>
-                    <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">contato@dreameventos.com.br &nbsp;|&nbsp; +55 11 5193 3323</p>
+                    <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">contato@dreameventos.com.br &nbsp;|&nbsp; +55 11 5183 3323</p>
                   </td>
                 </tr>
 
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
 
   const { error } = await resend.emails.send({
     from: 'Site Dream <onboarding@resend.dev>', // troque pelo seu domínio verificado
-    to: ['renatomar76@gmail.com'],
+    to: ['contato@dreameventos.com.br'],
     subject: `Novo contato de ${nome}`,
     html,
     text: `Nome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\n\n${mensagem}`,

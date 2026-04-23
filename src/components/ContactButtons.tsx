@@ -63,7 +63,7 @@ export default function ContactButtons() {
 
         {/* WhatsApp button */}
         <a
-          href="https://wa.me/5511972550341"
+          href="https://wa.me/551151833323"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
