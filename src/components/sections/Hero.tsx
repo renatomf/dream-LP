@@ -6,7 +6,7 @@ import HeroMediaFade from './HeroMedia'
 
 const HERO_QUERY = `*[_type == "hero"][0]{ mediaType, videoId, image }`
 
-const FALLBACK_VIDEO_ID = '4qz6x8y3tNw'
+const FALLBACK_VIDEO_ID = 'GUY1motJw4A'
 
 interface SanityHero {
   mediaType?: string;

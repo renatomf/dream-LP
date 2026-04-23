@@ -173,6 +173,12 @@ export function StudioWithTheme() {
           --card-icon-color: #e05500 !important;
         }
 
+        /* Menu dos itens de array (3 pontos: remover, copiar, duplicar) */
+        [data-testid="array-item-menu-button"],
+        [data-ui="MenuButton"] {
+          cursor: pointer !important;
+        }
+
         /* Drag handle cursor */
         [data-rfd-drag-handle-draggable-id],
         [data-rfd-drag-handle-draggable-id] *,
@@ -196,6 +202,7 @@ export function StudioWithTheme() {
           --card-border-color: #ff6200 !important;
           --card-fg-color: #ffffff !important;
           --card-icon-color: #ffffff !important;
+          cursor: pointer !important;
         }
         [data-testid="add-multiple--primitive-button"]:hover {
           --card-bg-color: #e05500 !important;
@@ -383,6 +390,20 @@ export function StudioWithTheme() {
         }
         [data-sanity-icon="spinner"] path {
           stroke: #ff6200 !important;
+        }
+
+        /* Texto "Carregando documento" abaixo do spinner nos painéis de lista */
+        [data-ui="Flex"]:has(> [data-ui="Spinner"]):not(:has([data-ui="Text"])):not(:has(p)) {
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+        [data-ui="Flex"]:has(> [data-ui="Spinner"]):not(:has([data-ui="Text"])):not(:has(p))::after {
+          content: "Carregando documento";
+          margin-top: 12px;
+          font-size: 13px;
+          color: var(--card-muted-fg-color);
+          letter-spacing: 0.05em;
         }
 
         /* Progress ring inside buttons — orange stroke on hover */
