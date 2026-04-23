@@ -42,7 +42,7 @@ export default function PoliticaModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.1 }}
+            transition={{ duration: 0.35 }}
             className="fixed inset-0 z-200 bg-white overflow-hidden"
           >
             <div
