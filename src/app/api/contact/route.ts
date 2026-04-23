@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
 
   const { error } = await resend.emails.send({
     from: 'Site Dream <onboarding@resend.dev>', // troque pelo seu domínio verificado
-    to: ['renatomar76@gmail.com'],
+    to: ['contato@dreameventos.com.br'],
     subject: `Novo contato de ${nome}`,
     html,
     text: `Nome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\n\n${mensagem}`,

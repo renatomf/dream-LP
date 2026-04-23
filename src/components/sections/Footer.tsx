@@ -39,10 +39,16 @@ export default function Footer() {
       <div className="max-w-268 mx-auto px-4 md:px-8 py-2 flex flex-col items-center md:flex-row md:items-start md:justify-between gap-12 md:gap-48 pb-12">
         {/* Social icons — alinhado com o logo */}
         <div className="flex gap-3 items-start shrink-0">
-          {[LinkedinIcon, InstagramIcon, FacebookIcon].map((Icon, i) => (
+          {[
+            { Icon: LinkedinIcon, href: "https://www.linkedin.com/company/dream-eventos/" },
+            { Icon: InstagramIcon, href: "https://www.instagram.com/dream_eventos_" },
+            { Icon: FacebookIcon, href: "https://www.facebook.com/dreameventos" },
+          ].map(({ Icon, href }, i) => (
             <a
               key={i}
-              href="#"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-8 h-8 rounded-full bg-[#FF5C00] hover:scale-110 transition-transform flex items-center justify-center"
             >
               <Icon />
@@ -56,7 +62,14 @@ export default function Footer() {
           <div className="flex flex-col gap-4 items-center md:items-start">
             <div className="text-center md:text-left">
               <p className="text-xs uppercase tracking-widest text-[#FF5C00] mb-1">Telefone</p>
-              <p className="text-sm text-white/80">+55 11 5183 3323</p>
+              <a
+                href="https://wa.me/551151833323"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/80 hover:text-white transition-colors"
+              >
+                +55 11 5183 3323
+              </a>
             </div>
             <div className="text-center md:text-left">
               <p className="text-xs uppercase tracking-widest text-[#FF5C00] mb-1">Email</p>

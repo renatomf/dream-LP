@@ -384,6 +384,22 @@ export function StudioWithTheme() {
           outline: none !important;
         }
 
+        /* Notificações de produto Sanity (novidades, updates) — bottom-left */
+        [data-testid="announcements-popover"],
+        [data-testid="studio-announcements"],
+        [data-testid="announcements"],
+        [data-testid="whats-new"],
+        [aria-label="What's new"],
+        [aria-label="O que há de novo"],
+        [data-ui="AnnouncementsPopover"],
+        [data-ui="NewsletterWidget"],
+        [class*="announcements"],
+        [class*="Announcements"] {
+          display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+
         /* Spinner — laranja */
         [data-ui="Spinner"] {
           color: #ff6200 !important;
@@ -399,7 +415,24 @@ export function StudioWithTheme() {
           justify-content: center !important;
         }
         [data-ui="Flex"]:has(> [data-ui="Spinner"]):not(:has([data-ui="Text"])):not(:has(p))::after {
-          content: "Carregando documento";
+          content: "Carregando documento...";
+          margin-top: 12px;
+          font-size: 13px;
+          color: var(--card-muted-fg-color);
+          letter-spacing: 0.05em;
+        }
+
+        /* Texto "Carregando documento" no painel do editor (hero, etc.) */
+        [data-testid="document-panel"] [data-ui="Flex"]:has([data-ui="Spinner"]),
+        [data-testid="pane"]:has([data-ui="Spinner"]) > [data-ui="Flex"]:has([data-ui="Spinner"]),
+        [data-testid="document-pane-content"]:has([data-ui="Spinner"]) [data-ui="Flex"]:has(> [data-ui="Spinner"]) {
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+        [data-testid="document-panel"] [data-ui="Flex"]:has(> [data-ui="Spinner"])::after,
+        [data-testid="pane"] [data-ui="Flex"]:has(> [data-ui="Spinner"]):not(:has([data-ui="Flex"]))::after {
+          content: "Carregando documento...";
           margin-top: 12px;
           font-size: 13px;
           color: var(--card-muted-fg-color);
