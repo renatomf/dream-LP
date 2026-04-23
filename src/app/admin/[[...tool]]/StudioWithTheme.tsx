@@ -424,7 +424,6 @@ export function StudioWithTheme() {
 
         /* Texto "Carregando documento" no painel do editor (hero, etc.) */
         [data-testid="document-panel"] [data-ui="Flex"]:has([data-ui="Spinner"]),
-        [data-testid="pane"]:has([data-ui="Spinner"]) > [data-ui="Flex"]:has([data-ui="Spinner"]),
         [data-testid="document-pane-content"]:has([data-ui="Spinner"]) [data-ui="Flex"]:has(> [data-ui="Spinner"]) {
           flex-direction: column !important;
           align-items: center !important;
