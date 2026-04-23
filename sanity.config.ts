@@ -24,7 +24,7 @@ export default defineConfig({
   },
   document: {
     newDocumentOptions: (prev) =>
-      prev.filter((item) => item.templateId !== 'about' && item.templateId !== 'hero'),
+      prev.filter((item) => item.templateId !== 'about' && item.templateId !== 'hero' && item.templateId !== 'media.tag'),
     actions: (prev, { schemaType }) => {
       if (schemaType === 'about' || schemaType === 'hero') {
         return prev.filter((action) => action.action === 'publish')

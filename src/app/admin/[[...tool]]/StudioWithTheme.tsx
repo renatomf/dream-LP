@@ -8,6 +8,12 @@ export function StudioWithTheme() {
   return (
     <>
       <style>{`
+        /* Tela branca enquanto o Studio carrega */
+        html, body { background-color: #ffffff !important; }
+
+        /* Focus ring transparente */
+        [data-ui="Card"] { --card-focus-ring-color: transparent !important; }
+
         /* TextInput igual ao TextArea — mesma borda e fundo */
         [data-ui="TextInput"] {
           border-radius: 3px !important;
