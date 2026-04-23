@@ -135,7 +135,7 @@ export default function Navbar({ onNavigate }: NavbarProps = {}) {
               {navLinks.map(({ href, label }) => (
                 <a
                   key={href}
-                  href={onNavigate ? undefined : href}
+                  href={href}
                   onClick={(e) => {
                     setIsDrawerOpen(false);
                     if (onNavigate) {

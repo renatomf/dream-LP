@@ -10,6 +10,7 @@ interface ContactModalProps {
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [form, setForm] = useState({ nome: '', email: '', telefone: '', mensagem: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle');
 
@@ -37,7 +38,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     if (res.ok) {
       setForm({ nome: '', email: '', telefone: '', mensagem: '' });
       setStatus('ok');
-      setTimeout(onClose, 1600);
+      closeTimerRef.current = setTimeout(onClose, 1600);
     } else {
       setStatus('error');
     }
@@ -51,6 +52,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
       document.addEventListener('keydown', handleKey);
       document.body.style.overflow = 'hidden';
     } else {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
       setStatus('idle');
       setForm({ nome: '', email: '', telefone: '', mensagem: '' });
     }

@@ -9,7 +9,10 @@ export default function PoliticaModal() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setShowScrollTop(false);
+      return;
+    }
     const container = document.getElementById("politica-scroll");
     if (!container) return;
     container.scrollTop = 0;

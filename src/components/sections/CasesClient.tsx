@@ -98,7 +98,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
                   onClick={() => openModal(c)}
-                  className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer h-88 md:h-[clamp(420px,68vw,590px)] ${
+                  className={`relative group overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-2xl cursor-pointer h-88 md:h-[clamp(420px,68vw,590px)] ${
                     span === 2 ? 'lg:col-span-2' : 'lg:col-span-1'
                   }`}
                 >
@@ -113,7 +113,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                         : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
                       priority={i === 0}
                       loading={i === 0 ? 'eager' : 'lazy'}
-                      className="object-cover duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
                   {/* Gradient tint */}
