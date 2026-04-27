@@ -65,7 +65,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-200 flex items-center justify-center bg-black/75 backdrop-blur-sm px-6"
+          className="fixed inset-0 z-200 flex items-start sm:items-center justify-center bg-black/75 backdrop-blur-sm px-4 sm:px-6 overflow-y-auto py-6 sm:py-0"
           onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
         >
           <motion.div
@@ -73,7 +73,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-180 bg-[#111] rounded-2xl p-8 relative"
+            className="w-full max-w-180 bg-[#111] rounded-2xl p-5 sm:p-8 relative my-auto"
           >
             {/* Close */}
             <button
@@ -90,7 +90,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </h2>
 
             {/* Info row */}
-            <div className="grid grid-cols-3 gap-3 items-start mb-14">
+            <div className="grid grid-cols-1 gap-7 items-start mb-10 sm:grid-cols-3 sm:gap-3 sm:mb-14">
               <div>
                 <p className="text-[#FF2A35] text-[10px] uppercase tracking-widest font-semibold mb-1">
                   Telefone
@@ -117,16 +117,16 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </div>
 
               {/* Social icons */}
-              <div className="flex gap-2 justify-end">
+              <div className="flex gap-2 justify-start sm:justify-end">
                 {/* LinkedIn */}
                 <a
                   href="https://www.linkedin.com/company/dream-eventos/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="w-8 h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
+                  className="w-11 h-11 sm:w-8 sm:h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                  <svg width="20" height="20" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="white">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                     <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
                   </svg>
@@ -137,9 +137,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="w-8 h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
+                  className="w-11 h-11 sm:w-8 sm:h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
@@ -151,9 +151,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="w-8 h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
+                  className="w-11 h-11 sm:w-8 sm:h-8 rounded-full bg-[#FF2A35] flex items-center justify-center hover:scale-110 transition-transform"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                  <svg width="20" height="20" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="white">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                   </svg>
                 </a>
@@ -161,9 +161,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </div>
 
             {/* Form */}
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <form className="flex flex-col gap-6 sm:gap-4 pt-8 sm:pt-0" onSubmit={handleSubmit}>
               {/* Row: Nome, Email, Telefone */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-3">
                 <input
                   type="text"
                   name="nome"
@@ -212,7 +212,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <button
                   type="submit"
                   disabled={status === 'sending' || status === 'ok'}
-                  className="bg-[#FF2A35] text-white text-sm font-medium px-8 py-2.5 rounded-full hover:bg-[#CC2229] transition-colors disabled:opacity-60 cursor-pointer"
+                  className="w-full sm:w-auto bg-[#FF2A35] text-white text-sm font-medium px-8 py-2.5 rounded-full hover:bg-[#CC2229] transition-colors disabled:opacity-60 cursor-pointer"
                 >
                   {status === 'sending' ? 'Enviando...' : status === 'ok' ? 'Enviado!' : 'Enviar'}
                 </button>

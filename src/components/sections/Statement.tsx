@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function Statement() {
   return (
     <section className="relative bg-white pt-4 pb-14 md:pt-14 md:pb-28 overflow-hidden md:overflow-visible">
-      <div className="relative z-10 max-w-360 mx-auto px-8 flex items-center gap-6 md:gap-32">
+      <div className="relative z-10 max-w-360 mx-auto px-8 flex items-center gap-12 md:gap-32">
 
         {/* Text */}
         <div className="flex-1">
