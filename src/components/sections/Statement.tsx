@@ -42,7 +42,7 @@ export default function Statement() {
 
         {/* Orange gradient orb */}
         <div
-          className="shrink-0 w-54 h-54 md:w-80 md:h-80 rounded-full pointer-events-none translate-x-16 translate-y-0 md:translate-x-0 md:translate-y-0"
+          className="shrink-0 w-50 h-50 md:w-80 md:h-80 rounded-full pointer-events-none translate-x-16 translate-y-4 md:translate-x-0 md:translate-y-0"
           style={{
             background:
               "linear-gradient(30deg, rgba(235, 30, 40, 1) 0%, rgba(242,116,33,0.8) 100%)",
