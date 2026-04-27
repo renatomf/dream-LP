@@ -57,7 +57,7 @@ export default async function Hero() {
       <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20" />
 
       {/* Circular logo centered over video */}
-      <div className="absolute inset-0 z-20 flex items-center justify-center -translate-y-16">
+      <div className="absolute inset-0 z-20 flex items-center justify-center -translate-y-10 md:-translate-y-16">
         <svg
           viewBox="0 0 220 220"
           xmlns="http://www.w3.org/2000/svg"
