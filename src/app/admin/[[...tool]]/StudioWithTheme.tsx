@@ -1,9 +1,42 @@
 'use client'
 
+import { useEffect } from 'react'
 import {NextStudio} from 'next-sanity/studio'
 import baseConfig from '../../../../sanity.config'
 
+function useCaseDocumentTitle() {
+  useEffect(() => {
+    let pending: ReturnType<typeof setTimeout> | null = null
+
+    function maybePrefix() {
+      const path = window.location.pathname
+      const title = document.title
+      // URL when a specific case document is open contains 'case' followed by ';'
+      const onCaseDoc = /(?:\/|,)case;/.test(path)
+      if (onCaseDoc && title && !title.startsWith('Cases | ')) {
+        document.title = 'Cases | ' + title
+      }
+    }
+
+    const titleEl = document.querySelector('title')
+    if (!titleEl) return
+
+    const observer = new MutationObserver(() => {
+      if (pending) clearTimeout(pending)
+      pending = setTimeout(maybePrefix, 100)
+    })
+
+    observer.observe(titleEl, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      if (pending) clearTimeout(pending)
+    }
+  }, [])
+}
+
 export function StudioWithTheme() {
+  useCaseDocumentTitle()
 
   return (
     <>
