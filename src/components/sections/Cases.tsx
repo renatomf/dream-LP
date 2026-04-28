@@ -17,16 +17,23 @@ interface SanityCase {
 export default async function Cases() {
   const { data } = await sanityFetch({ query: CASES_QUERY })
 
-  const cases: CaseItem[] = (data as SanityCase[] | null)?.map((c) => ({
-    _id: c._id,
-    title: c.title,
-    location: c.location,
-    mediaType: c.mediaType,
-    videoId: c.videoId,
-    thumbUrl: c.thumbnail
-      ? urlFor(c.thumbnail).width(1200).height(800).fit('crop').auto('format').url()
-      : '',
-  })) ?? []
+  const cases: CaseItem[] = (data as SanityCase[] | null)?.map((c, i) => {
+    const isWide = i % 16 === 0 || i % 16 === 9
+    return {
+      _id: c._id,
+      title: c.title,
+      location: c.location,
+      mediaType: c.mediaType,
+      videoId: c.videoId,
+      thumbUrl: c.thumbnail
+        ? urlFor(c.thumbnail)
+            .width(isWide ? 1800 : 900)
+            .height(isWide ? 1200 : 1200)
+            .fit('crop').crop('focalpoint')
+            .auto('format').url()
+        : '',
+    }
+  }) ?? []
 
   return <CasesClient cases={cases} />
 }

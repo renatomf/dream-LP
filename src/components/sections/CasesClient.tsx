@@ -98,8 +98,8 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
                   onClick={() => openModal(c)}
-                  className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer h-88 md:h-[clamp(420px,68vw,590px)] ${
-                    span === 2 ? 'lg:col-span-2' : 'lg:col-span-1'
+                  className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer ${
+                    span === 2 ? 'aspect-3/2 lg:col-span-2' : 'aspect-3/4 lg:col-span-1'
                   }`}
                 >
                   {/* Thumbnail */}
