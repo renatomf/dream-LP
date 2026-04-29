@@ -99,7 +99,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
                   onClick={() => openModal(c)}
                   className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer ${
-                    span === 2 ? 'aspect-3/2 lg:col-span-2' : 'aspect-3/4 lg:col-span-1'
+                    span === 2 ? 'aspect-3/2 lg:aspect-auto lg:col-span-2' : 'aspect-3/4 lg:col-span-1'
                   }`}
                 >
                   {/* Thumbnail */}
@@ -129,8 +129,8 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   <div className="absolute inset-6 sm:inset-8 z-20 flex flex-col justify-between">
 
                     {/* Topo — badge */}
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0" />
+                    <div className="flex items-start gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-brand shrink-0 mt-0.75" />
                       <span className="text-white text-[12px] uppercase tracking-[0.3em] font-semibold">
                         {c.location}
                       </span>
