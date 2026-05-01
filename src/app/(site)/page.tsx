@@ -32,7 +32,7 @@ export default function Home() {
           />
           <VideoSection />
           <About />
-          <Testimonial />
+          {/* <Testimonial /> */}
         </div>
         <WorldTime />
         <Footer />
