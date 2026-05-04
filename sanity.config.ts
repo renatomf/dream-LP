@@ -17,7 +17,8 @@ export default defineConfig({
   schema,
   tools: (prev, {currentUser}) => {
     const isEditor = currentUser?.roles?.some((r) => r.name === 'editor')
-    if (isEditor) {
+    const isClientAdmin = currentUser?.email === 'dreameventos01@gmail.com'
+    if (isEditor || isClientAdmin) {
       return prev.filter((tool) => tool.name !== 'media')
     }
     return prev
