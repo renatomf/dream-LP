@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="background:#0a0a0a;border-top:1px solid #1a1a1a;padding:24px 40px;text-align:center;">
                     <p style="margin:0 0 4px;font-size:10px;color:#FF2A35;letter-spacing:3px;text-transform:uppercase;">dream</p>
-                    <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">contato@dreameventos.com.br &nbsp;|&nbsp; +55 11 5183 3323</p>
+                    <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">contato@dreameventos.com.br &nbsp;|&nbsp; +55 11 94743 5658</p>
                   </td>
                 </tr>
 

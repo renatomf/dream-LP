@@ -63,12 +63,12 @@ export default function Footer() {
             <div className="text-center md:text-left">
               <p className="text-xs uppercase tracking-widest text-[#FF5C00] mb-1">Telefone</p>
               <a
-                href="https://wa.me/551151833323"
+                href="https://wa.me/5511947435658"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-white/80 hover:text-white transition-colors"
               >
-                +55 11 5183 3323
+                +55 11 94743 5658
               </a>
             </div>
             <div className="text-center md:text-left">

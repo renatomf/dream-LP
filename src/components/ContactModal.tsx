@@ -96,12 +96,12 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   Telefone
                 </p>
                 <a
-                  href="https://wa.me/551151833323"
+                  href="https://wa.me/5511947435658"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white text-sm hover:text-white/70 transition-colors"
                 >
-                  +55 11 5183 3323
+                  +55 11 94743 5658
                 </a>
               </div>
               <div>

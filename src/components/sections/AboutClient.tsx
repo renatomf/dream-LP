@@ -116,7 +116,7 @@ export default function AboutClient({ stats }: { stats: Stat[] }) {
           </motion.p>
 
           <motion.a
-            href="https://wa.me/551151833323"
+            href="https://wa.me/5511947435658"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 16 }}
