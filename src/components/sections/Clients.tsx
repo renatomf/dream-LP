@@ -36,8 +36,9 @@ export default async function Clients() {
       : FALLBACK_CLIENTS
 
   const MIN_SLOTS = 8
-  const repeat = Math.ceil((MIN_SLOTS * 2) / clients.length)
-  const items = Array.from({ length: repeat }, () => clients).flat()
+  const baseRepeat = Math.max(1, Math.ceil(MIN_SLOTS / clients.length))
+  const baseItems = Array.from({ length: baseRepeat }, () => clients).flat()
+  const items = [...baseItems, ...baseItems]
 
   return (
     <section id="clientes" className="bg-white pt-0 pb-0 border-t border-white/5 scroll-mt-20">
@@ -56,7 +57,8 @@ export default async function Clients() {
           {items.map((client, i) => (
             <div
               key={`${client._id}-${i}`}
-              className="inline-flex items-center justify-center px-6 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0 cursor-pointer"
+              className="inline-flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity duration-300 shrink-0 cursor-pointer"
+              style={{ marginInline: '48px' }}
             >
               <Image
                 src={client.src}

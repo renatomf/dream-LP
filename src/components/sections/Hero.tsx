@@ -54,7 +54,7 @@ export default async function Hero() {
       <HeroMediaFade />
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/20" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
 
       {/* Circular logo centered over video */}
       <div className="absolute inset-0 z-20 flex items-center justify-center -translate-y-10 md:-translate-y-16">

@@ -15,10 +15,18 @@ export default function MarqueeTrack({
   const xRef = useRef(0);
   const lastRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
+  const halfWidthRef = useRef(0);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    halfWidthRef.current = track.scrollWidth / 2;
+
+    const ro = new ResizeObserver(() => {
+      halfWidthRef.current = track.scrollWidth / 2;
+    });
+    ro.observe(track);
 
     function tick(ts: number) {
       if (!track) return;
@@ -27,8 +35,8 @@ export default function MarqueeTrack({
 
       xRef.current -= speed * dt;
 
-      const halfWidth = track.scrollWidth / 2;
-      if (Math.abs(xRef.current) >= halfWidth) {
+      const halfWidth = halfWidthRef.current;
+      if (halfWidth > 0 && Math.abs(xRef.current) >= halfWidth) {
         xRef.current += halfWidth;
       }
 
@@ -39,6 +47,7 @@ export default function MarqueeTrack({
     rafRef.current = requestAnimationFrame(tick);
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
     };
   }, [speed]);
 

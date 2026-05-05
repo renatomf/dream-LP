@@ -26,6 +26,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
   const [modalCase, setModalCase] = useState<CaseItem | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -51,11 +52,32 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
   const visibleCases = cases.slice(0, visibleCount);
   const hasMore = visibleCount < cases.length;
 
+  useEffect(() => {
+    function onMessage(e: MessageEvent) {
+      try {
+        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+        if (data?.event === 'onStateChange') {
+          const state = typeof data.info === 'object' ? data.info?.playerState : data.info;
+          if (state === 1) setIsPlaying(true);
+          else if (state === 2 || state === 0 || state === -1) setIsPlaying(false);
+        }
+        if (data?.event === 'infoDelivery' && data?.info?.playerState !== undefined) {
+          const state = data.info.playerState;
+          if (state === 1) setIsPlaying(true);
+          else if (state === 2 || state === 0 || state === -1) setIsPlaying(false);
+        }
+      } catch {}
+    }
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
   function openModal(c: CaseItem) {
     const idx = cases.findIndex((x) => x._id === c._id);
     setCarouselIndex(idx);
     setModalCase(c);
     setIsPlaying(true);
+    setIsMuted(false);
   }
 
   function navigate(dir: 1 | -1) {
@@ -63,6 +85,16 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
     setCarouselIndex(next);
     setModalCase(cases[next]);
     setIsPlaying(true);
+    setIsMuted(false);
+  }
+
+  function toggleMute() {
+    const cmd = isMuted ? 'unMute' : 'mute';
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func: cmd, args: [] }),
+      '*'
+    );
+    setIsMuted(!isMuted);
   }
 
   function togglePlay() {
@@ -231,26 +263,37 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
 
                       {/* Video iframe or full image — active card only */}
                       {isActive && c.mediaType !== 'image' && c.videoId && (
-                        <iframe
-                          ref={iframeRef}
-                          key={c._id}
-                          className="absolute z-10 pointer-events-none"
-                          style={{
-                            top: '50%',
-                            left: '50%',
-                            width: 'max(100%, 177.78vh)',
-                            height: 'max(100%, 56.25vw)',
-                            transform: 'translate(-50%, -50%)',
-                          }}
-                          src={`https://www.youtube.com/embed/${c.videoId}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoId}&enablejsapi=1`}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
+                        <>
+                          <iframe
+                            ref={iframeRef}
+                            key={c._id}
+                            className="absolute z-10 pointer-events-none"
+                            style={{
+                              top: '50%',
+                              left: '50%',
+                              width: 'max(100%, 177.78vh)',
+                              height: 'max(100%, 56.25vw)',
+                              transform: 'translate(-50%, -50%)',
+                            }}
+                            src={`https://www.youtube.com/embed/${c.videoId}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&loop=1&playlist=${c.videoId}&enablejsapi=1`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                          {!isPlaying && c.thumbUrl && (
+                            <Image
+                              src={c.thumbUrl}
+                              alt={c.title}
+                              fill
+                              className="object-cover absolute z-12 pointer-events-none"
+                              sizes="33vw"
+                            />
+                          )}
+                        </>
                       )}
 
                       {/* Dark overlay — hidden on active (video shows instead) */}
                       <div
-                        className="absolute inset-0 transition-all duration-500"
+                        className="absolute inset-0 transition-all duration-500 cursor-pointer!"
                         style={{ background: isActive ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.55)', zIndex: isActive ? 0 : 1 }}
                       />
 
@@ -268,14 +311,33 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                       {/* Active: play/pause + title + nav */}
                       {isActive && (
                         <>
+                          {/* Mute button — top right of active card */}
+                          {c.mediaType !== 'image' && c.videoId && (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); toggleMute(); }}
+                              className="absolute top-6 right-5 z-30 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                              aria-label={isMuted ? 'Ativar som' : 'Silenciar'}
+                            >
+                              {isMuted ? (
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0 0 17.73 18.6L19 19.73 20.73 18 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                                </svg>
+                              ) : (
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                              )}
+                            </button>
+                          )}
+
                           {/* Play/Pause button — video only */}
                           {c.mediaType !== 'image' && c.videoId && (
                             <button
                               onClick={(e) => { e.stopPropagation(); togglePlay(); }}
-                              className="absolute inset-0 z-20 flex items-center justify-center group"
+                              className="absolute inset-0 z-20 flex items-center justify-center group cursor-pointer"
                               aria-label={isPlaying ? 'Pausar' : 'Reproduzir'}
                             >
-                              <div className={`w-16 h-16 rounded-full border-2 border-white/70 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+                              <div className="w-16 h-16 rounded-full border-2 border-white/70 bg-black/30 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 {isPlaying ? (
                                   <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
@@ -315,6 +377,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                               →
                             </button>
                           </div>
+
                         </>
                       )}
                     </div>
