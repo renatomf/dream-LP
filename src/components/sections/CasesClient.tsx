@@ -28,10 +28,14 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsCompact(window.innerWidth < 1024);
+    };
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
@@ -131,7 +135,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                   transition={{ duration: 0.6, delay: (i % 3) * 0.08 }}
                   onClick={() => openModal(c)}
                   className={`relative group overflow-hidden text-left focus:outline-none rounded-2xl cursor-pointer ${
-                    span === 2 ? 'aspect-3/4 md:aspect-3/2 lg:aspect-auto lg:col-span-2' : 'aspect-3/4 lg:col-span-1'
+                    span === 2 ? 'aspect-3/4 md:aspect-3/2 md:aspect-auto lg:col-span-2' : 'aspect-3/4 lg:col-span-1'
                   }`}
                 >
                   {/* Thumbnail */}
@@ -221,25 +225,25 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
               onClick={() => setModalCase(null)}
               className="absolute top-5 right-5 z-40 text-white hover:text-[#e85d04] transition-colors text-sm uppercase tracking-widest flex items-center gap-2"
             >
-              Fechar <span className="text-2xl leading-none">×</span>
+            <span className="text-5xl leading-none">×</span>
             </button>
 
             {/* Sliding strip */}
             <div className="relative w-full h-full">
               {/* Edge gradients — desktop only */}
-              {!isMobile && <>
+              {!isCompact && <>
                 <div className="absolute inset-y-0 left-0 w-40 z-30 pointer-events-none" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.85), transparent)' }} />
                 <div className="absolute inset-y-0 right-0 w-40 z-30 pointer-events-none" style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.85), transparent)' }} />
               </>}
               <motion.div
                 className="flex h-full"
                 animate={{
-                  x: isMobile
+                  x: isCompact
                     ? `calc(-${carouselIndex} * 100vw)`
                     : `calc(50vw - ${carouselIndex} * (100vw / 3.2) - (100vw / 3.2) / 2)`,
                 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                style={{ width: isMobile ? `calc(${cases.length} * 100vw)` : `calc(${cases.length} * (100vw / 3.2))` }}
+                style={{ width: isCompact ? `calc(${cases.length} * 100vw)` : `calc(${cases.length} * (100vw / 3.2))` }}
               >
                 {cases.map((c, i) => {
                   const isActive = i === carouselIndex;
@@ -248,7 +252,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                       key={c._id}
                       onClick={() => { setCarouselIndex(i); setIsPlaying(true); setModalCase(c); }}
                       className="relative h-full shrink-0 cursor-pointer overflow-hidden"
-                      style={{ width: isMobile ? '100vw' : 'calc(100vw / 3.2)' }}
+                      style={{ width: isCompact ? '100vw' : 'calc(100vw / 3.2)' }}
                     >
                       {/* Thumbnail (always present as background) */}
                       {c.thumbUrl && (
@@ -315,7 +319,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                           {c.mediaType !== 'image' && c.videoId && (
                             <button
                               onClick={(e) => { e.stopPropagation(); toggleMute(); }}
-                              className="absolute top-18 md:top-6 right-5 z-30 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                              className="absolute top-22 lg:top-6 right-4.5 z-30 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/60 transition-colors"
                               aria-label={isMuted ? 'Ativar som' : 'Silenciar'}
                             >
                               {isMuted ? (
