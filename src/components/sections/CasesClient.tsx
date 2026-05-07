@@ -315,7 +315,7 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
                           {c.mediaType !== 'image' && c.videoId && (
                             <button
                               onClick={(e) => { e.stopPropagation(); toggleMute(); }}
-                              className="absolute top-6 right-5 z-30 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                              className="absolute top-18 md:top-6 right-5 z-30 w-9 h-9 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-black/60 transition-colors"
                               aria-label={isMuted ? 'Ativar som' : 'Silenciar'}
                             >
                               {isMuted ? (
@@ -358,20 +358,19 @@ export default function CasesClient({ cases }: { cases: CaseItem[] }) {
 
                           {/* Navigation arrows */}
                           <div
-                            className="absolute bottom-8 left-1/2 z-20 flex gap-3"
-                            style={{ transform: 'translateX(-50%)' }}
+                            className="absolute bottom-8 left-0 right-0 z-20 flex justify-between px-5"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <button
                               onClick={() => navigate(-1)}
-                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand hover:text-white transition-all"
+                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-black hover:text-white hover:border-black transition-all"
                               aria-label="Anterior"
                             >
                               ←
                             </button>
                             <button
                               onClick={() => navigate(1)}
-                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand hover:text-white transition-all"
+                              className="w-11 h-11 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-black hover:text-white hover:border-black transition-all"
                               aria-label="Próximo"
                             >
                               →
